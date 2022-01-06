@@ -1,0 +1,18 @@
+[
+	{
+		"id":"1",
+		"packet_type":"1",
+		"imsi":"1",
+		"imei":"1",
+		"ptmsi":"1",
+		"tmsi":"1"
+	},
+	{
+		"id":"1",
+		"packet_type":"1",
+		"imsi":"1",
+		"imei":"1",
+		"ptmsi":"1",
+		"tmsi":"1"
+	}
+]

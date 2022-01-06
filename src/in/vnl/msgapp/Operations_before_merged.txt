@@ -1,0 +1,3686 @@
+package in.vnl.msgapp;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
+import java.util.Calendar;
+import java.util.Timer;
+
+import javax.servlet.ServletException;
+//import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.*;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+
+import com.oreilly.servlet.*;
+import com.oreilly.servlet.multipart.FileRenamePolicy;
+
+/**
+ * Servlet implementation class Operations
+ */
+
+
+
+import io.socket.IOAcknowledge;
+import io.socket.IOCallback;
+import io.socket.SocketIO;
+import io.socket.SocketIOException;
+import io.socket.emitter.Emitter;
+import io.socket.engineio.client.Socket;
+
+import in.vnl.api.threeg.ThreegOperations;
+import in.vnl.msgapp.Common;
+import in.vnl.api.twog.livescreens.SMSIntercept;
+import in.vnl.api.twog.livescreens.TrackedImsiServer;
+import in.vnl.api.twog.livescreens.opretorDataServer;
+
+//@WebServlet("/Operations")
+public class Operations extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public Operations() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		PrintWriter out = response.getWriter();
+		String methodName = request.getParameter("methodName");
+		
+		switch(methodName)
+		{
+		case "getoprreportData":
+			out.print(getoprreportData(request));				
+			break;
+		case "getMobileType":
+			out.print(getMobileType(request));				
+			break;
+		case "getMobileTypeAll":
+			out.print(getMobileTypeAll(request));				
+			break;	
+		case "saveCdrOperations":
+			out.print(saveCdrOperations(request));				
+			break;
+		case "saveBcdrOperations":
+			out.print(saveBcdrOperations(request));				
+			break;
+		case "getLocBTStype":
+			out.print(getLocBTStype(request));				
+			break;
+		case "getLocOprations":
+			out.print(getLocOprations(request));				
+			break;
+		case "locate":
+			out.print(locate(request));				
+			break;
+		case "locateWithNeighbour":
+			out.print(locateWithNeighbour(request));				
+			break;				
+		case "triggerSms":
+			out.print(triggerSms(request));
+			break;
+		case "getLatLon":
+				out.print(getLatLon(request));
+			break;
+		case "getCellsData":
+				out.print(getCellsData(request));
+			break;
+		case "getMapData":
+				out.print(getMapData(request));
+			break;
+		case "InsertSearchData":
+				out.print(InsertSearchData(request));
+			break;
+		case "updateNib":
+				out.print(updateNib(request));
+			break;
+		case "getNibIp":
+				out.print(getNibIp(request));
+			break;	
+		case "getMapServerIp":
+				out.print(getMapServerIp(request));
+			break;
+		case "getScanedData":
+				out.print(getScanedData(request));
+			break;
+		case "getDistinctIMSI":
+				out.print(getDistinctIMSI(request));
+			break;
+		case "getScanedDataCenter":
+				out.print(getScanedDataCenter(request));
+			break;
+		case "triggerPage":
+				out.print(triggerPage(request));
+			break;
+		case "livepoll":
+				out.print(livepoll(request));
+			break;
+		case "getListForImsiImei":
+				out.print(getListForImsiImei(request));
+			break;
+		case "serverCall":
+				out.print(serverCall(request));
+			break;
+		case "getAllNibs":
+				out.print(getAllNibs());
+			break;
+		case "getRunningMode":
+				out.print(getRunningMode(request));
+			break;
+		case "setStatus":
+				out.print(setStatus(request));
+			break;
+		case "getSpectrumData":
+				out.print(getSpectrumData(request));
+			break;
+		case "getSpectrumDataAngle":
+				out.print(getSpectrumDataAngle(request));
+			break;	
+		case "getGPSData":
+				out.print(getGPSData(request));
+			break;
+		case "getCDRdata":
+				out.print(getCDRdata(request));
+			break;
+		case "getReq":
+				out.print(getReq(request));
+			break;
+		case "insertGeoLocData":
+				out.print(insertGeoLocData(request));
+			break;
+		case "getGeoLocdata":
+				out.print(getGeoLocdata(request));
+			break;
+		case "cdrData":
+				out.print(cdrData(request));
+			break;
+		case "mtSmsGeoData":
+				out.print(mtSmsGeoData(request));
+			break;
+		case "getGeoLocdataLocal":
+				out.print(getGeoLocdataLocal(request));
+			break;
+		case "spectrumData":
+				out.print(spectrumData(request));
+			break;
+		case "spectrumDataAntena":
+				out.print(spectrumDataAntena(request));
+			break;
+		case "gpsData":
+				out.print(gpsData(request));
+			break;
+		case "getCDRGPSData":
+				out.print(getCDRGPSData(request));
+			break;
+		case "truncateDb":
+				out.print(truncateDb(request));
+			break;
+		case "truncateDbOpr":
+				out.print(truncateDbOpr(request));
+			break;			
+		case "uploadCSV":
+				out.print(uploadCSV(request,response));
+			break;
+		case "getCurrentActiveOperation":
+				out.print(getCurrentActiveOperation(request));
+			break;
+		case "getwidsReportData":
+				out.print(getwidsReportData(request));
+			break;
+		case "oprData":
+				out.print(oprData(request));
+			break;
+		case "getoprlogsData":
+				out.print(getoprlogsData(request));
+			break;
+		case "getAllBtsInfo":
+			    out.print(getAllBtsInfo());
+			break;
+		case "uploadGpsData":
+				out.print(uploadGpsData(request,response));
+			break;
+		case "scheduleSubscriberSearch":
+				out.print(scheduleSubscriberSearch(request));
+			break;
+		case "getAllScheduledSubscribers":
+			    out.print(getAllScheduledSubscribers(request));
+			break;
+		case "startScheduledTask":
+			    out.print(startScheduledTask(request));
+			break;
+		case "stopScheduledTask":
+			    out.print(stopScheduledTask(request));
+			break;
+		case "changePeriodicityOfScheduledTask":
+			    out.print(changePeriodicityOfScheduledTask(request));
+			break;
+		case "deleteScheduledTask":
+			    out.print(deleteScheduledTask(request));
+			break;
+		case "setSelectedNibIp":
+		       out.print(setSelectedNibIp(request));
+			break;
+		case "getBtsInfoPerApplication":
+			   out.print(getBtsInfoPerApplication(request));
+			break;
+		case "getNodeWiseReport":
+			out.print(getNodeWiseReport(request));
+			break;
+	}
+	}
+	
+		public JSONArray getAllBtsInfo()
+	{
+		Common co = new Common();
+		Statement smt = null;
+		Connection con = co.getDbConnection();
+		JSONArray ja = new JSONArray();
+		try
+		{
+			smt = con.createStatement();			
+			String query = "select * from view_btsinfo order by grp_name";
+			fileLogger.debug(query);
+			ResultSet rs = smt.executeQuery(query);
+			
+			while(rs.next())
+			{
+				JSONObject jo = new JSONObject();
+				jo.put("b_id", rs.getString("b_id"));
+				jo.put("ip", rs.getString("ip"));
+				jo.put("statuscode", rs.getString("statuscode"));
+				jo.put("cellcode", rs.getString("cellcode"));
+				jo.put("typeid", rs.getString("typeid"));
+				jo.put("typename", rs.getString("typename"));
+				jo.put("status", rs.getString("status"));
+				jo.put("cellstatus", rs.getString("cellstatus"));
+				jo.put("dcode", rs.getString("dcode"));
+				jo.put("dname", rs.getString("dname"));
+				jo.put("sytemid", rs.getString("sytemid"));
+				jo.put("code", rs.getString("code"));
+				jo.put("grp_id", rs.getString("grp_id"));
+				jo.put("grp_name", rs.getString("grp_name"));
+				jo.put("application_id", rs.getString("application_id"));
+				jo.put("application_name", rs.getString("application_name"));
+				jo.put("application_status", rs.getString("application_status"));
+				ja.put(jo);
+			}			
+		}
+		catch(Exception E)
+		{
+			fileLogger.debug("Exeption while authenticating the user "+E.getMessage());
+		}
+		finally
+		{
+			try
+			{
+				smt.close();
+				con.close();
+			}
+			catch(Exception E)
+			{
+				
+			}
+		}	
+		return ja;
+}	
+	
+	public JSONArray getAllGroups()
+	{
+		Common co = new Common();
+		Statement smt = null;
+		Connection con = co.getDbConnection();
+		JSONArray ja = new JSONArray();
+		try
+		{
+			smt = con.createStatement();			
+			String query = "select * from groups";
+			fileLogger.debug(query);
+			ResultSet rs = smt.executeQuery(query);
+			
+			while(rs.next())
+			{
+				JSONObject jo = new JSONObject();
+				jo.put("id", rs.getString("id"));
+				jo.put("name", rs.getString("group_name"));
+				ja.put(jo);
+			}			
+		}
+		catch(Exception E)
+		{
+			fileLogger.debug("Exeption while authenticating the user "+E.getMessage());
+		}
+		finally
+		{
+			try
+			{
+				smt.close();
+				con.close();
+			}
+			catch(Exception E)
+			{
+				
+			}
+		}	
+		return ja;
+	}
+	
+	
+	public JSONArray getAllNibs()
+	{
+		Common co = new Common();
+		JSONArray ja = new JSONArray();
+		try
+		{
+			HashMap<String,String> ll = co.getDbCredential();
+			
+			String[] nibs = ll.get("allnibs").split(",");
+			for(String nib:nibs)
+			{
+				ja.put(nib);
+			}
+		}
+		catch(Exception E)
+		{
+			fileLogger.debug("Exeption while authenticating the user "+E.getMessage());
+		}	
+		return ja;
+	}
+	
+	
+	
+	public JSONArray getAllNumbers()
+	{
+		Common co = new Common();
+		Statement smt = null;
+		Connection con = co.getDbConnection();
+		JSONArray ja = new JSONArray();
+		try
+		{
+			smt = con.createStatement();			
+			String query = "select * from phone_numbers";
+			fileLogger.debug(query);
+			ResultSet rs = smt.executeQuery(query);
+			
+			while(rs.next())
+			{
+				JSONObject jo = new JSONObject();
+				jo.put("id", rs.getString("id"));
+				jo.put("number", rs.getString("phone_number"));
+				ja.put(jo);
+			}			
+		}
+		catch(Exception E)
+		{
+			fileLogger.debug("Exeption while authenticating the user "+E.getMessage());
+		}
+		finally
+		{
+			try
+			{
+				smt.close();
+				con.close();
+			}
+			catch(Exception E)
+			{
+				
+			}
+		}	
+		return ja;
+	}
+	
+	
+	public JSONArray getPhoneNumbersForGroups(HttpServletRequest request)
+	{
+		Common co = new Common();
+		Statement smt = null;
+		Connection con = co.getDbConnection();
+		JSONArray ja = new JSONArray();
+		String grp = request.getParameter("groups");
+		try
+		{
+			smt = con.createStatement();			
+			String query = "select * from phone_numbers where id in (select num_id from group_phone_mapping where grp_id in("+grp+"));";
+			fileLogger.debug(query);
+			ResultSet rs = smt.executeQuery(query);			
+			while(rs.next())
+			{				
+				ja.put(rs.getString("phone_number"));
+			}			
+		}
+		catch(Exception E)
+		{
+			fileLogger.debug("Exeption while authenticating the user "+E.getMessage());
+		}
+		finally
+		{
+			try
+			{
+				smt.close();
+				con.close();
+			}
+			catch(Exception E)
+			{
+				
+			}
+		}	
+		return ja;
+	}
+	
+	
+	public JSONArray getPhoneNumbersForGroupsWithName(HttpServletRequest request)
+	{
+		Common co = new Common();
+		Statement smt = null;
+		Connection con = co.getDbConnection();
+		
+		JSONArray ja = new JSONArray();
+		
+		String grp = request.getParameter("groups");
+		try
+		{
+			smt = con.createStatement();			
+			String query = "select * from phone_numbers where id in (select num_id from group_phone_mapping where grp_id in("+grp+"));";
+			fileLogger.debug(query);
+			ResultSet rs = smt.executeQuery(query);			
+			while(rs.next())
+			{				
+				JSONObject jb = new JSONObject();
+				
+				jb.append("name",rs.getString("name") );
+				jb.append("number",rs.getString("phone_number") );
+				//ja.put(rs.getString("phone_number"));
+				ja.put(jb);
+			}			
+		}
+		catch(Exception E)
+		{
+			fileLogger.debug("Exeption while authenticating the user "+E.getMessage());
+		}
+		finally
+		{
+			try
+			{
+				smt.close();
+				con.close();
+			}
+			catch(Exception E)
+			{
+				
+			}
+		}	
+		return ja;
+	}
+	
+	
+	/*This function will send the message */
+	
+	
+	
+	
+	/*This function will send the message */
+	
+	@SuppressWarnings("deprecation")
+	public String locate(HttpServletRequest request)
+	{
+		String imsi = request.getParameter("imsi");
+		String tId = request.getParameter("t_id");
+		String flag = request.getParameter("flag");		
+		Common co = new Common();
+		HashMap<String,String> ll = co.getDbCredential();
+		//String myURL = "http://"+ll.get("nib")+"/Trace.html?CMD_TYPE=GETALL_SUB_TRACK_REQ&TAGS00="+tId+"&TAGS001="+imsi+"&TAGS02="+flag+"&";
+		//String myURL = "http://"+ll.get("nib")+"/cgi-bin/processData.sh";
+		String myURL = "http://"+getNibIp(request)+"/cgi-bin/processData_CLI.sh";
+		
+		String CMD_TYPE="GETALL_SUB_TRACK_REQ";
+		
+		String TAGS00=tId;
+		String TAGS01=imsi;
+		String TAGS02=flag;
+		
+		//params.add(new BasicNameValuePair("TAGS00", tId));
+		//params.add(new BasicNameValuePair("TAGS01", imsi));
+		//params.add(new BasicNameValuePair("TAGS02", imei));
+		//params.add(new BasicNameValuePair("TAGS03", flag));
+		//params.add(new BasicNameValuePair("TAGS04", "2"));
+		
+		//String myURL = "http://10.100.208.172/temp/text.json";
+		
+		String mdr = "";
+		
+		try
+		{
+			if(!flag.equalsIgnoreCase("2") || !flag.equalsIgnoreCase("3"))
+			Thread.sleep(10000);
+			mdr=co.aa(myURL,CMD_TYPE,TAGS00,TAGS01,TAGS02);			
+			//mdr = co.callURL("http://"+getNibIp(request)+"/temp/target.json");
+			
+						
+		}
+		catch(Exception E)
+		{
+			fileLogger.debug("Exeption while request"+E.getMessage());
+		}
+		if(mdr.equalsIgnoreCase("ERROR"))
+		{
+			mdr="{\"STATUS\":\"3\"}";
+		}		
+		return mdr;		
+	}
+
+	
+
+	@SuppressWarnings("deprecation")
+	public String livepoll(HttpServletRequest request)
+	{
+		String imsi = request.getParameter("imsi");
+		String imei = request.getParameter("imei");
+		String tId = request.getParameter("t_id");
+		String flag = request.getParameter("flag");		
+		Common co = new Common();
+		HashMap<String,String> ll = co.getDbCredential();
+		//String myURL = "http://"+ll.get("nib")+"/Trace.html?CMD_TYPE=GETALL_SUB_TRACK_REQ&TAGS00="+tId+"&TAGS001="+imsi+"&TAGS02="+flag+"&";
+		//String myURL = "http://"+ll.get("nib")+"/cgi-bin/processData.sh";
+		String myURL = "http://"+getNibIp(request)+"/cgi-bin/processData_CLI.sh";
+		
+		String CMD_TYPE="GETALL_SUB_TRACK_REQ";
+		
+		String TAGS00=tId;
+		String TAGS01=imsi;
+		String TAGS02=imei;
+		String TAGS03=flag;
+		
+		//String myURL = "http://10.100.208.172/temp/text.json";
+		
+		String mdr = "";
+		
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("CMD_TYPE",CMD_TYPE ));
+		params.add(new BasicNameValuePair("TAGS00", tId));
+		params.add(new BasicNameValuePair("TAGS01", imsi));
+		params.add(new BasicNameValuePair("TAGS02", imei));
+		params.add(new BasicNameValuePair("TAGS03", flag));
+		
+		
+		try
+		{
+			//if(!flag.equalsIgnoreCase("2") || !flag.equalsIgnoreCase("3"))
+			//Thread.sleep(1000);
+			mdr = co.callPostDataUrl(myURL,params);			
+			//mdr = co.callURL("http://"+ll.get("nib")+"/temp/target.json");
+			Thread.sleep(1000);
+			//mdr = co.callURL("http://"+getNibIp(request)+"/temp/target.json");
+			
+			
+			//mdr = co.callURL("http://10.100.200.110/celldata.json");			
+		}
+		catch(Exception E)
+		{
+			fileLogger.debug("Exeption while request"+E.getMessage());
+		}
+		if(mdr.equalsIgnoreCase("ERROR"))
+		{
+			mdr="{\"STATUS\":\"3\"}";
+		}		
+		return mdr;		
+	}	
+	
+	
+	@SuppressWarnings("deprecation")
+	public String locateWithNeighbour(HttpServletRequest request)
+	{
+		String imsi = request.getParameter("imsi");
+		String imei = request.getParameter("imei");
+		String tId = request.getParameter("t_id");
+		String flag = request.getParameter("flag");
+		int length = Integer.parseInt(request.getParameter("lengthOfNeigh"));		
+		
+		List<NameValuePair> params = new ArrayList<NameValuePair>();		
+		
+		params.add(new BasicNameValuePair("CMD_TYPE","GETALL_SUB_TRACK_REQ" ));
+		params.add(new BasicNameValuePair("TAGS00", tId));
+		params.add(new BasicNameValuePair("TAGS01", imsi));
+		params.add(new BasicNameValuePair("TAGS02", imei));
+		params.add(new BasicNameValuePair("TAGS03", flag));
+		params.add(new BasicNameValuePair("TAGS04", "2"));
+		int j = 5;
+		for(int i=4;i<length+4;i++)
+		{
+			
+			String key = null;
+			
+			if(i<=9)
+			{
+				key = "TAGS0"+i;
+			}
+			else
+			{
+				key = "TAGS"+i;
+			}
+			
+			if(j<=9)
+			{
+				params.add(new BasicNameValuePair("TAGS0"+j, request.getParameter(key)));
+			}
+			else
+			{
+				params.add(new BasicNameValuePair("TAGS"+j, request.getParameter(key)));
+			}
+			j++;
+			
+		}
+		
+		
+		
+		Common co = new Common();
+		HashMap<String,String> ll = co.getDbCredential();
+		//String myURL = "http://"+ll.get("nib")+"/Trace.html?CMD_TYPE=GETALL_SUB_TRACK_REQ&TAGS00="+tId+"&TAGS001="+imsi+"&TAGS02="+flag+"&";
+		//String myURL = "http://"+ll.get("nib")+"/cgi-bin/processData.sh";
+		String myURL = "http://"+getNibIp(request)+"/cgi-bin/processData_CLI.sh";
+		
+		
+		String mdr = "";
+		
+		try
+		{
+			if(!flag.equalsIgnoreCase("2"))
+				Thread.sleep(10000);
+			
+			mdr = co.callPostDataUrl(myURL,params);			
+			//mdr = co.callURL("http://"+getNibIp(request)+"/temp/target.json");
+			
+						
+		}
+		catch(Exception E)
+		{
+			fileLogger.debug("Exeption while request"+E.getMessage());
+		}
+		if(mdr.equalsIgnoreCase("ERROR"))
+		{
+			mdr="{\"STATUS\":\"3\"}";
+		}		
+		return mdr;		
+	}
+	
+	//this functon will be used to create the gruop	
+	public boolean createGroup(HttpServletRequest request)
+	{
+		String groupName = request.getParameter("group_name");
+		
+		String query = "insert into groups(group_name) values('"+groupName+"')";
+		Common co = new Common();
+		return co.executeDLOperation(query);		
+	}
+	//this function will delete the group
+	public boolean deleteGroup(HttpServletRequest request)
+	{
+		String groupid = request.getParameter("group_id");
+		
+		String query = "delete from group_phone_mapping  where grp_id = "+groupid;
+		
+		Common co = new Common();
+		co.executeDLOperation(query);
+		query = "delete from groups where id = "+groupid;
+		return co.executeDLOperation(query);
+	}
+	//this function will add the new number
+	public boolean addNewNumber(HttpServletRequest request)
+	{
+		String phone_number = request.getParameter("number");
+		String name = request.getParameter("owner_name");
+		String query = "insert into phone_numbers(phone_number,name) values('"+phone_number+"','"+name+"')";
+		Common co = new Common();
+		return co.executeDLOperation(query);		
+	}
+	//this function will delete the number
+	public boolean deleteNumber(HttpServletRequest request)
+	{
+		String id = request.getParameter("id");
+		String query = "delete from group_phone_mapping  where num_id = "+id;
+		
+		Common co = new Common();
+		co.executeDLOperation(query);
+		 query = "delete from phone_numbers where id = "+id;
+		return co.executeDLOperation(query);
+	}
+	//this function will be used to add the number to the groups
+	public boolean assignNumberToGroup(HttpServletRequest request)
+	{
+		String groupid = request.getParameter("group_id");
+		String numberid = request.getParameter("number_id");
+		String query = "insert into group_phone_mapping(grp_id,num_id) values("+groupid+","+numberid+")";
+		Common co = new Common();		
+		return co.executeDLOperation(query);
+	}	
+	//this function will be used to add the number to the groups
+	public boolean deleteNumbersFromGroup(HttpServletRequest request)
+	{
+		String groupid = request.getParameter("group_id");
+		String numberids = request.getParameter("numbers");
+		String query = "delete from group_phone_mapping where grp_id = "+groupid+" and num_id in(select id from phone_numbers where phone_number in('"+numberids+"'))";
+		Common co = new Common();		
+		return co.executeDLOperation(query);
+	}
+	
+	//this function will be used to add the number to the groups
+	public JSONArray getmsgLogs(HttpServletRequest request)
+	{
+		String startDate = request.getParameter("startDate");
+		String endDate = request.getParameter("endDate");
+		String query = "select sendingtime,user_name,phone_number,msg,status from msglogs left join users on(msglogs.userid = users.id) where sendingtime between '"+startDate+"' and '"+endDate+"';";
+		fileLogger.debug(query);		
+		Common co = new Common();
+		Statement smt = null;
+		Connection con = co.getDbConnection();
+		JSONArray ja = new JSONArray();
+		try
+		{
+			smt = con.createStatement();			
+			fileLogger.debug(query);
+			ResultSet rs = smt.executeQuery(query);
+			
+			while(rs.next())
+			{
+				JSONObject jo = new JSONObject();
+				String status = "";
+				if(rs.getString("status") != null && !rs.getString("status").equalsIgnoreCase(""))
+				{
+					status = rs.getString("status");
+				}
+				
+				String message = URLDecoder.decode(rs.getString("msg"), "ASCII");
+				
+				jo.put("time", rs.getString("sendingtime"));
+				jo.put("name", rs.getString("user_name"));
+				jo.put("number", rs.getString("phone_number"));
+				jo.put("msg", message);
+				jo.put("status", status);
+				ja.put(jo);
+			}			
+		}
+		catch(Exception E)
+		{
+			fileLogger.debug("Exeption while getting the msg logs "+E.getMessage());
+		}
+		finally
+		{
+			try
+			{
+				smt.close();
+				con.close();
+			}
+			catch(Exception E)
+			{
+				fileLogger.debug("Exception : "+E.getMessage());
+			}
+		}
+		fileLogger.debug("hello");
+		return ja;
+		
+	}
+	
+
+	
+	//this function will be used to add the number to the groups
+		public String triggerPage(HttpServletRequest request)
+		{
+			String msisdn = request.getParameter("msisdn");
+			String param = request.getParameter("param");
+			Common co = new Common();
+			HashMap<String,String> ll = co.getDbCredential();
+			
+			String myURL = "http://"+getNibIp(request)+"/cgi-bin/processData.sh";
+			
+			String CMD_TYPE="UPD_SMSREQ";
+			
+			
+			String TAGS00="1";
+			String TAGS01=msisdn;
+			String TAGS02="Dummy";
+			String TAGS03="2";
+			String TAGS04="DEFAULT";
+			String TAGS05=param;
+			
+			
+			String mdr = "";			
+			try
+			{
+				//Thread.sleep(10000);
+				mdr = co.bb(myURL, CMD_TYPE, TAGS00, TAGS01, TAGS02,TAGS03, TAGS04, TAGS05);				
+				mdr = co.callURL(myURL);
+				//mdr = co.callURL("http://10.100.200.110/celldata.json");
+			}
+			catch(Exception E)
+			{
+				
+			}
+			return mdr;			
+		}
+	
+	
+	//this function will be used to add the number to the groups
+		public String triggerSms(HttpServletRequest request)
+		{
+			String msisdn = request.getParameter("msisdn");	
+			Common co = new Common();
+			HashMap<String,String> ll = co.getDbCredential();
+			//String myURL = "http://10.151.96.36:13013/cgi-bin/sendsms?username=tester&password=foobar&to="+number+"&text="+message;			
+			
+			//String myURL = "http://"+ll.get("nib")+"/Trace.html?CMD_TYPE= UPD_SMSREQ&TAGS00=1&TAGS01="+msisdn+"&TAGS02=Dummy&TAGS03=2&TAGS04=DEFAULT&TAGS05=dummy";			
+			
+			
+			//String myURL = "http://"+ll.get("nib")+"/cgi-bin/processData.sh";
+			String myURL = "http://"+getNibIp(request)+"/cgi-bin/processData.sh";
+			
+			String CMD_TYPE="UPD_SMSREQ";
+			
+			
+			String TAGS00="1";
+			String TAGS01=msisdn;
+			String TAGS02="Dummy";
+			String TAGS03="2";
+			String TAGS04="DEFAULT";
+			String TAGS05="dummy";
+			
+			
+			String mdr = "";			
+			try
+			{
+				Thread.sleep(10000);
+				mdr = co.bb(myURL, CMD_TYPE, TAGS00, TAGS01, TAGS02,TAGS03, TAGS04, TAGS05);				
+				mdr = co.callURL(myURL);
+				//mdr = co.callURL("http://10.100.200.110/celldata.json");
+			}
+			catch(Exception E)
+			{
+				
+			}
+			return mdr;			
+		}
+		
+		public String getCellsData(HttpServletRequest request)
+		{
+				
+			Common co = new Common();
+			HashMap<String,String> ll = co.getDbCredential();
+			
+			//String myURL = "http://"+ll.get("nib")+"/cgi-bin/processData.sh";
+			String myURL = "http://"+getNibIp(request)+"/cgi-bin/processData.sh";
+			
+			String CMD_TYPE="GET_SON";			
+			String TAGS00="1";
+			
+			
+			String mdr = "";
+			
+			
+			List<NameValuePair> params = new ArrayList<NameValuePair>();
+			
+			
+			params.add(new BasicNameValuePair("CMD_TYPE",CMD_TYPE ));
+			params.add(new BasicNameValuePair("TAGS00", TAGS00));		
+			
+			try
+			{
+				//Thread.sleep(10000);
+				
+				mdr = co.callPostDataUrl(myURL,params);
+				mdr = co.callURL("http://"+getNibIp(request)+"/temp/SON-NS.json");
+				
+				
+			}
+			catch(Exception E)
+			{
+				
+			}
+			return mdr;			
+		}
+	
+		public JSONArray getLatLon(HttpServletRequest request)
+		{
+			String MCC = request.getParameter("MCC");
+			String MNC = request.getParameter("MNC");
+			String LAC = request.getParameter("LAC");
+			String CELL = request.getParameter("CELL");
+			String query = "select lat,lon from cell_data where mcc = "+MCC+" and net = "+MNC+" and area= "+LAC+" and cell = "+CELL+" and lat is not null and lat >0 and lon is not null and lon >0 limit 1;";
+			String query2 = "select lat,lon from cell_data2 where mcc = "+MCC+" and net = "+MNC+" and area= "+LAC+" and cell = "+CELL+" and lat is not null and lat >0 and lon is not null and lon >0 limit 1;";
+			String query3 = "select oprname("+MCC+""+MNC+"::numeric) as opr , getcountry("+MCC+"::numeric) as country;";
+			fileLogger.debug(query3);		
+			Common co = new Common();
+			Statement smt = null;
+			Statement smt1 = null;
+			Statement smt2 = null;
+			Connection con = co.getDbConnection();
+			JSONArray ja = new JSONArray();
+			try
+			{
+				smt = con.createStatement();			
+				smt1 = con.createStatement();
+				
+				ResultSet rs = smt.executeQuery(query);
+				boolean bb= false;
+				JSONObject jo = new JSONObject();
+				while(rs.next())
+				{
+					
+					if(rs.getString("lat") != null && rs.getString("lon") !=null )
+					{
+						jo.put("lat", rs.getString("lat"));
+						jo.put("lon", rs.getString("lon"));
+					}
+					else
+					{
+						jo.put("lat", "-1");
+						jo.put("lon", "-1");
+					}
+					bb = true;
+					
+				}				
+				if(!bb)
+				{
+					
+					ResultSet rs1 = smt1.executeQuery(query2);
+					while(rs1.next())
+					{						
+						if(rs1.getString("lat") != null && rs1.getString("lon") !=null )
+						{
+							jo.put("lat", rs.getString("lat"));
+							jo.put("lon", rs.getString("lon"));
+						}
+						else
+						{
+							jo.put("lat", "-1");
+							jo.put("lon", "-1");
+						}
+						bb = true;
+						//ja.put(jo);
+					}
+				}				
+				if(!bb)
+				{
+					jo.put("lat", "-1");
+					jo.put("lon", "-1");
+					//ja.put(jo);
+				}
+				
+				smt2 = con.createStatement();
+				ResultSet rs2 = smt2.executeQuery(query3);
+				while(rs2.next())
+				{	
+					jo.put("count", rs2.getString("country")==null?"":rs2.getString("country"));
+					jo.put("opr",rs2.getString("opr")==null?"":rs2.getString("opr"));
+				}
+				ja.put(jo);
+				
+			}
+			catch(Exception E)
+			{
+				fileLogger.debug("Exeption while getting the lat lon "+E.getMessage());
+			}
+			finally
+			{
+				try
+				{
+					smt.close();
+					smt1.close();
+					con.close();
+				}
+				catch(Exception E)
+				{
+					fileLogger.debug("Exception : "+E.getMessage());
+				}
+			}			
+			return ja;			
+		}
+		
+		
+		public JSONArray getMapData(HttpServletRequest request)
+		{
+			
+			//String CELL = request.getParameter("CELL");
+			String query = "select distinct * from operators where tech != 'LTE'";
+			
+			fileLogger.debug(query);		
+			Common co = new Common();
+			Statement smt = null;
+			Connection con = co.getDbConnection();
+			JSONArray ja = new JSONArray();
+			try
+			{
+				smt = con.createStatement();				
+				ResultSet rs = smt.executeQuery(query);				
+				
+				while(rs.next())
+				{					
+					JSONObject jo = new JSONObject();
+					if(rs.getString("lat") != null && rs.getString("lon") !=null )
+					{
+						jo.put("lat", rs.getString("lat"));
+						jo.put("lon", rs.getString("lon"));
+						jo.put("tech", rs.getString("tech"));
+						jo.put("mcc", rs.getString("mcc"));
+						jo.put("mnc", rs.getString("mnc"));
+						jo.put("lac", rs.getString("lac"));
+						jo.put("cell", rs.getString("cell"));
+						jo.put("name", rs.getString("operator_name"));
+						jo.put("img", rs.getString("imagename"));
+					}					
+					ja.put(jo);
+				}
+				//ja.put(jo);
+			}
+			catch(Exception E)
+			{
+				fileLogger.debug("Exeption while getting the"+E.getMessage());
+			}
+			finally
+			{
+				try
+				{
+					smt.close();					
+					con.close();
+				}
+				catch(Exception E)
+				{
+					fileLogger.debug("Exception : "+E.getMessage());
+				}
+			}			
+			return ja;			
+		}
+		
+		public String InsertSearchData(HttpServletRequest request)
+		{
+			String[] data = request.getParameterValues("data[]");
+			
+			String sql1 = "INSERT INTO scaneddata(packetId,nibip,imei, imsi, ta, mcc, mnc, lac, cell, rxlvl,lat, lon, isneorself,log)"
+					+ " VALUES (";
+			String sql2 = ",now());";
+			List<String> la = new ArrayList<String>();
+			try
+			{				
+				for (String value : data) 
+				{				
+					la.add(sql1+value+sql2);
+				}
+				new Common().executeBatchOperation(la);
+				
+			}
+			catch(Exception E)
+			{
+				
+			}
+			return "OK";
+			
+		}
+		
+		public String updateNib(HttpServletRequest request)
+		{
+			
+			HttpSession ses = request.getSession();
+			String nib = request.getParameter("nib");			
+			
+			
+			ses.setAttribute("currentNib", nib);
+			
+			return "Updated";
+		}
+		
+		public String getNibIp(HttpServletRequest request)
+		{			
+			HttpSession ses = request.getSession();
+			
+			//Object nib = ses.getAttribute("nib");			
+			String nibIp = "";
+			if( ses.getAttribute("currentNib")  == null )
+			{
+				HashMap<String,String> ll = new Common().getDbCredential();
+				nibIp =  ll.get("nib");				
+			}				
+			else
+			{
+				String aa = (String)ses.getAttribute("currentNib");
+				nibIp = aa;
+			}
+			return nibIp;
+		}
+		
+		public String getMapServerIp(HttpServletRequest request)
+		{	
+				HashMap<String,String> ll = new Common().getDbCredential();
+				String mapserverIp =  ll.get("mapserver");			
+				return mapserverIp;
+		}
+		
+		
+		
+		public JSONArray getScanedData(HttpServletRequest request)
+		{
+			
+			String startTime = request.getParameter("startDate");
+			String endTime = request.getParameter("endDate");
+			String imsi = request.getParameter("imsi");
+			
+			String query = "select * from get_scan_data where log between '"+startTime+"' and  '"+endTime+"' and imsi = "+imsi +" and lat != -1 and lon != -1 and lat is not null and lon is not null;";
+			
+			fileLogger.debug(query);		
+			Common co = new Common();
+			Statement smt = null;
+			Connection con = co.getDbConnection();
+			JSONArray ja = new JSONArray();
+			try
+			{
+				smt = con.createStatement();				
+				ResultSet rs = smt.executeQuery(query);				
+				
+				while(rs.next())
+				{					
+					JSONObject jo = new JSONObject();
+					if(rs.getString("lat") != null && rs.getString("lon") !=null && !rs.getString("lat").equalsIgnoreCase("-1") && !rs.getString("lon").equalsIgnoreCase("-1"))
+					{
+						jo.put("lat", rs.getString("lat"));
+						jo.put("lon", rs.getString("lon"));
+						jo.put("t_id", rs.getString("t_id"));
+						jo.put("mcc", rs.getString("mcc"));
+						jo.put("mnc", rs.getString("mnc"));
+						jo.put("lac", rs.getString("lac"));
+						jo.put("cell", rs.getString("cell"));
+						jo.put("packetid", rs.getString("packetid"));
+						jo.put("nibip", rs.getString("nibip"));
+						jo.put("imei", rs.getString("imei"));
+						jo.put("imsi", rs.getString("imsi"));
+						jo.put("ta", rs.getString("ta"));
+						jo.put("isneorself", rs.getString("isneorself"));
+						jo.put("log", rs.getString("log"));
+						jo.put("rxlvl", rs.getString("rxlvl"));
+						ja.put(jo);
+					}					
+					
+				}
+				//ja.put(jo);
+			}
+			catch(Exception E)
+			{
+				fileLogger.debug("Exeption while getting the"+E.getMessage());
+			}
+			finally
+			{
+				try
+				{
+					smt.close();					
+					con.close();
+				}
+				catch(Exception E)
+				{
+					fileLogger.debug("Exception : "+E.getMessage());
+				}
+			}			
+			return ja;			
+		}
+		
+		
+		
+		public JSONArray getScanedDataCenter(HttpServletRequest request)
+		{
+			
+			String startTime = request.getParameter("startDate");
+			String endTime = request.getParameter("endDate");
+			String imsi = request.getParameter("imsi");
+			
+			String query = "select * from get_scan_data where log between '"+startTime+"' and  '"+endTime+"' and imsi = "+imsi+" and isneorself = 'S' order by log desc limit 1";
+			
+			fileLogger.debug(query);		
+			Common co = new Common();
+			Statement smt = null;
+			Connection con = co.getDbConnection();
+			JSONArray ja = new JSONArray();
+			try
+			{
+				smt = con.createStatement();				
+				ResultSet rs = smt.executeQuery(query);				
+				
+				while(rs.next())
+				{					
+					JSONObject jo = new JSONObject();
+					
+						jo.put("lat", rs.getString("lat"));
+						jo.put("lon", rs.getString("lon"));
+						jo.put("t_id", rs.getString("t_id"));
+						jo.put("mcc", rs.getString("mcc"));
+						jo.put("mnc", rs.getString("mnc"));
+						jo.put("lac", rs.getString("lac"));
+						jo.put("cell", rs.getString("cell"));
+						jo.put("packetid", rs.getString("packetid"));
+						jo.put("nibip", rs.getString("nibip"));
+						jo.put("imei", rs.getString("imei"));
+						jo.put("imsi", rs.getString("imsi"));
+						jo.put("ta", rs.getString("ta"));
+						jo.put("isneorself", rs.getString("isneorself"));
+						jo.put("log", rs.getString("log"));
+						ja.put(jo);
+										
+					
+				}
+				//ja.put(jo);
+			}
+			catch(Exception E)
+			{
+				fileLogger.debug("Exeption while getting the"+E.getMessage());
+			}
+			finally
+			{
+				try
+				{
+					smt.close();					
+					con.close();
+				}
+				catch(Exception E)
+				{
+					fileLogger.debug("Exception : "+E.getMessage());
+				}
+			}			
+			return ja;			
+		}
+		
+		
+		public JSONArray getDistinctIMSI(HttpServletRequest request)
+		{
+			
+			//String startTime = request.getParameter("startDate");
+			//String endTime = request.getParameter("endDate");
+			
+			String query = "select distinct(imsi) from scaneddata";
+			
+			fileLogger.debug(query);		
+			Common co = new Common();
+			Statement smt = null;
+			Connection con = co.getDbConnection();
+			JSONArray ja = new JSONArray();
+			try
+			{
+				smt = con.createStatement();				
+				ResultSet rs = smt.executeQuery(query);
+				while(rs.next())
+				{					
+					ja.put(rs.getString("imsi"));
+				}
+			}
+			catch(Exception E)
+			{
+				fileLogger.debug("Exeption while getting the"+E.getMessage());
+			}
+			finally
+			{
+				try
+				{
+					smt.close();					
+					con.close();
+				}
+				catch(Exception E)
+				{
+					fileLogger.debug("Exception : "+E.getMessage());
+				}
+			}			
+			return ja;			
+		}
+		
+		
+		@SuppressWarnings("deprecation")
+		public String getListForImsiImei(HttpServletRequest request)
+		{	
+			String cmdType = request.getParameter("cmd");
+			String fileName = request.getParameter("fileName");
+			List<NameValuePair> params = new ArrayList<NameValuePair>();
+			params.add(new BasicNameValuePair("CMD_TYPE",cmdType ));
+			//params.add(new BasicNameValuePair("TAGS00", tId));
+			Common co = new Common();
+			HashMap<String,String> ll = co.getDbCredential();
+			String myURL = "http://"+getNibIp(request)+"/cgi-bin/processData.sh";
+			String mdr = "";
+			try
+			{			
+				mdr=co.callPostDataUrl(myURL,params);
+				mdr = co.callURL("http://"+getNibIp(request)+"/temp/"+fileName);
+			}
+			catch(Exception E)
+			{
+				fileLogger.debug("Exeption while request"+E.getMessage());
+			}
+			if(mdr.equalsIgnoreCase("ERROR"))
+			{
+				mdr="{\"STATUS\":\"3\"}";
+			}		
+			return mdr;		
+		}
+		
+		
+		@SuppressWarnings("deprecation")
+		public String serverCall(HttpServletRequest request)
+		{	
+			String cmdType = request.getParameter("cmd");
+			String fileName = request.getParameter("fileName");
+			String flag = request.getParameter("flag");
+			String imei = request.getParameter("imei");
+			String imsi = request.getParameter("imsi");
+			
+			
+			
+			
+			List<NameValuePair> params = new ArrayList<NameValuePair>();
+			params.add(new BasicNameValuePair("CMD_TYPE",cmdType ));
+			params.add(new BasicNameValuePair("TAGS00", ""));
+			params.add(new BasicNameValuePair("TAGS01", imsi));
+			params.add(new BasicNameValuePair("TAGS02", imei));
+			params.add(new BasicNameValuePair("TAGS03", flag));
+			Common co = new Common();
+			HashMap<String,String> ll = co.getDbCredential();
+			String myURL = "http://"+getNibIp(request)+"/cgi-bin/processData_CLI.sh";
+			String mdr = "";
+			try
+			{			
+				mdr =  co.callPostDataUrl(myURL,params);
+				//mdr = co.callURL("http://"+getNibIp(request)+"/temp/"+fileName);
+			}
+			catch(Exception E)
+			{
+				fileLogger.debug("Exeption while request"+E.getMessage());
+			}
+			if(mdr.equalsIgnoreCase("ERROR"))
+			{
+				mdr="{\"STATUS\":\"3\"}";
+			}		
+			return mdr;		
+		}
+		
+		/*public String getRunningMode()
+		{			
+			
+			return "exclusion";
+		} */
+		
+		@SuppressWarnings("deprecation")
+		public String setStatus(HttpServletRequest request)
+		{
+			String MONITMODE = request.getParameter("MONITMODE");
+			String INVOKETRACE = request.getParameter("INVOKETRACE");
+			String IMEITRACEMODE = request.getParameter("IMEITRACEMODE");
+			String AUTOCONNNECT = request.getParameter("AUTOCONNNECT");
+			String RFU2 = request.getParameter("RFU2");
+			String RFU3 = request.getParameter("RFU3");
+			String RFU4 = request.getParameter("RFU4");
+			String CMD_TYPE = request.getParameter("cmdType");
+			
+			Common co = new Common();
+			
+			HashMap<String,String> ll = co.getDbCredential();
+			
+			String myURL = "http://"+getNibIp(request)+"/cgi-bin/processData.sh";
+			
+			//String CMD_TYPE="GET_MONIT_MODE";			
+			String TAGS00=MONITMODE;
+			String TAGS01=INVOKETRACE;
+			String TAGS02=IMEITRACEMODE;
+			String TAGS03=AUTOCONNNECT;
+			String TAGS04=RFU2;
+			String TAGS05=RFU3;
+			String TAGS06=RFU4;
+			
+			//String myURL = "http://10.100.208.172/temp/text.json";			
+			String mdr = "";			
+			List<NameValuePair> params = new ArrayList<NameValuePair>();
+			params.add(new BasicNameValuePair("CMD_TYPE",CMD_TYPE ));
+			params.add(new BasicNameValuePair("TAGS00", TAGS00));
+			params.add(new BasicNameValuePair("TAGS01", TAGS01));
+			params.add(new BasicNameValuePair("TAGS02", TAGS02));
+			params.add(new BasicNameValuePair("TAGS03", TAGS03));
+			params.add(new BasicNameValuePair("TAGS04", TAGS04));
+			params.add(new BasicNameValuePair("TAGS05", TAGS05));
+			params.add(new BasicNameValuePair("TAGS06", TAGS06));
+			
+			
+			try
+			{	
+				mdr = co.callPostDataUrl(myURL,params);
+				mdr = co.callURL("http://"+getNibIp(request)+"/temp/nsFlagList.json");
+			}
+			catch(Exception E)
+			{
+				fileLogger.debug("Exeption while request"+E.getMessage());
+			}
+			if(mdr.equalsIgnoreCase("ERROR"))
+			{
+				mdr="{\"STATUS\":\"3\"}";
+			}		
+			return mdr;		
+		}
+		
+		
+		
+		@SuppressWarnings("deprecation")
+		public String getRunningMode(HttpServletRequest request)
+		{	
+			String cmdType = request.getParameter("cmd");
+			String fileName = request.getParameter("fileName");
+			
+			List<NameValuePair> params = new ArrayList<NameValuePair>();
+			params.add(new BasicNameValuePair("CMD_TYPE",cmdType ));
+			Common co = new Common();
+			HashMap<String,String> ll = co.getDbCredential();
+			//String myURL = "http://"+getNibIp(request)+"/cgi-bin/processData.sh";
+			String myURL = "http://"+getNibIp(request)+"/cgi-bin/processData_CLI.sh";
+			String mdr = "";
+			try
+			{			
+				mdr = co.callPostDataUrl(myURL,params);
+				//mdr = co.callURL("http://"+getNibIp(request)+"/temp/"+fileName);
+			}
+			catch(Exception E)
+			{
+				fileLogger.debug("Exeption while request"+E.getMessage());
+			}
+			if(mdr.equalsIgnoreCase("ERROR"))
+			{
+				mdr="{\"STATUS\":\"3\"}";
+			}		
+			return mdr;		
+		}
+		
+		public void insertAlarm(String data)
+		{			
+			String query = "insert into cdrAlarm ";	
+			new Common().executeDLOperation(query);			
+		}
+		
+		
+		public JSONArray getCDRdata(HttpServletRequest request)
+		{
+			String startTime = request.getParameter("startTime");
+			String endTime = request.getParameter("endTime");
+			String query = "select * from cdrlogs where inserttime between '"+startTime+"' and '"+endTime+"' and packet_type='Normal_LU'";
+			fileLogger.debug(query);
+			return getJson(query);			
+		}
+		
+		
+		/*public JSONArray getCDRdata(HttpServletRequest request)
+		{
+			Common co = new Common();
+			Statement smt = null;
+			Connection con = co.getDbConnection();
+			
+			JSONArray ja = new JSONArray();
+			
+			
+			
+			String startTime = request.getParameter("startTime");
+			String endTime = request.getParameter("endTime");
+			try
+			{
+				smt = con.createStatement();			
+				String query = "select * from cdrlogs where inserttime between '"+startTime+"' and '"+endTime+"' and packet_type='Normal_LU'";
+				fileLogger.debug(query);
+				ResultSet rs = smt.executeQuery(query);
+				ResultSetMetaData rm = rs.getMetaData();
+				int totalColumns = rm.getColumnCount();
+				ArrayList<String> columns = new ArrayList<String>();
+				
+				for(int i=1;i<=totalColumns;i++ )
+				{
+					columns.add(rm.getColumnName(i));
+				}
+				
+				while(rs.next())
+				{				
+					JSONObject jb = new JSONObject();
+					for(String cname:columns)
+					{
+						jb.put(cname, rs.getString(cname));
+					}
+					ja.put(jb);
+				}			
+			}
+			catch(Exception E)
+			{
+				fileLogger.debug("Exeption while authenticating the user "+E.getMessage());
+			}
+			finally
+			{
+				try
+				{
+					smt.close();
+					con.close();
+				}
+				catch(Exception E)
+				{
+					
+				}
+			}	
+			return ja;
+		}*/
+		
+		
+		public JSONArray getSpectrumData(HttpServletRequest request)
+		{
+			String startTime = request.getParameter("startTime");
+			String endTime = request.getParameter("endTime");
+			String type = request.getParameter("type");
+			String query = "select a.id,a.ip,a.count,a.power,a.freq,a.tstmp,a.logtime,b.lat,b.lon,wsdiDataangle.angle,wsdiDataangle.anglet from wsdiData a left join dis_gps b on(a.tstmp = b.tstmp) left join wsdiDataangle on(a.tstmp= wsdiDataangle.tstmp) where a.logtime between '"+startTime+"' and '"+endTime+"'";
+			fileLogger.debug("Type"+type);
+			
+			switch(Integer.parseInt(type))
+			{
+				case 1:
+					query="select a.id,a.ip,a.count,a.power,a.freq,a.tstmp,a.logtime,b.lat,b.lon,wsdiDataangle.angle,wsdiDataangle.anglet from (select * from wsdiData where(freq,ip,power::numeric,DATE_TRUNC('min',to_timestamp(tstmp,'DDMMYY-HH24-MI-SS')::timestamp without time zone)) in (select distinct freq,ip,max(power::numeric),DATE_TRUNC('min',to_timestamp(tstmp,'DDMMYY-HH24-MI-SS')::timestamp without time zone) from wsdiData WHERE (to_timestamp(tstmp,'DDMMYY-HH24-MI-SS')::timestamp without time zone) between '"+startTime+"' and '"+endTime+"' group by freq,DATE_TRUNC('min',to_timestamp(tstmp,'DDMMYY-HH24-MI-SS')::timestamp without time zone),ip) ) a  left join dis_gps b on(a.tstmp = b.tstmp) left join wsdiDataangle on(a.tstmp= wsdiDataangle.tstmp) order by a.logtime asc";;
+				break;
+				case 2:
+					query="select a.id,a.ip,a.count,a.power,a.freq,a.tstmp,a.logtime,b.lat,b.lon,wsdiDataangle.angle,wsdiDataangle.anglet from (select * from wsdiData where(freq,ip,power::numeric,DATE_TRUNC('second',to_timestamp(tstmp,'DDMMYY-HH24-MI-SS')::timestamp without time zone)) in (select distinct freq,ip,max(power::numeric),DATE_TRUNC('second',to_timestamp(tstmp,'DDMMYY-HH24-MI-SS')::timestamp without time zone) from wsdiData WHERE (to_timestamp(tstmp,'DDMMYY-HH24-MI-SS')::timestamp without time zone) between '"+startTime+"' and '"+endTime+"' group by freq,DATE_TRUNC('second',to_timestamp(tstmp,'DDMMYY-HH24-MI-SS')::timestamp without time zone),ip) ) a  left join dis_gps b on(a.tstmp = b.tstmp) left join wsdiDataangle on(a.tstmp= wsdiDataangle.tstmp) order by a.logtime asc";
+				break;
+			}
+			fileLogger.debug(query);
+			return getJson(query);			
+		}
+		
+		
+		
+		
+		/*public JSONArray getSpectrumData(HttpServletRequest request)
+		{
+			Common co = new Common();
+			Statement smt = null;
+			Connection con = co.getDbConnection();
+			
+			JSONArray ja = new JSONArray();
+			
+			
+			
+			String startTime = request.getParameter("startTime");
+			String endTime = request.getParameter("endTime");
+			try
+			{
+				smt = con.createStatement();			
+				//String query = "select * from wsdiData where logtime between '"+startTime+"' and '"+endTime+"'";
+				String query = "select a.id,a.ip,a.count,a.power,a.freq,a.tstmp,a.logtime,b.lat,b.lon,wsdiDataangle.angle,wsdiDataangle.anglet from wsdiData a left join dis_gps b on(a.tstmp = b.tstmp) left join wsdiDataangle on(a.tstmp= wsdiDataangle.tstmp) where a.logtime between '"+startTime+"' and '"+endTime+"'";
+				fileLogger.debug(query);
+				ResultSet rs = smt.executeQuery(query);
+				ResultSetMetaData rm = rs.getMetaData();
+				int totalColumns = rm.getColumnCount();
+				ArrayList<String> columns = new ArrayList<String>();
+				
+				for(int i=1;i<=totalColumns;i++ )
+				{
+					columns.add(rm.getColumnName(i));
+				}
+				
+				while(rs.next())
+				{				
+					JSONObject jb = new JSONObject();
+					for(String cname:columns)
+					{
+						jb.put(cname, rs.getString(cname));
+					}
+					ja.put(jb);
+				}			
+			}
+			catch(Exception E)
+			{
+				fileLogger.debug("Exeption while authenticating the user "+E.getMessage());
+			}
+			finally
+			{
+				try
+				{
+					smt.close();
+					con.close();
+				}
+				catch(Exception E)
+				{
+					
+				}
+			}	
+			return ja;
+		}*/
+		
+		public String getReq(HttpServletRequest request)
+		{	
+			String cmdType = request.getParameter("cmdType");
+			String reqType = request.getParameter("reqType");
+			String idType = request.getParameter("idType");
+			String type_value = request.getParameter("type_value");
+			String vlr = request.getParameter("vlr");
+			String hlr = request.getParameter("hlr");
+			String ftn = request.getParameter("ftn");
+			String msc = request.getParameter("msc");
+			String fileName = request.getParameter("fileName");
+			
+			List<NameValuePair> params = new ArrayList<NameValuePair>();
+			params.add(new BasicNameValuePair("CMD_TYPE",cmdType ));
+			params.add(new BasicNameValuePair("TAGS00", reqType));
+			params.add(new BasicNameValuePair("TAGS01", idType));
+			params.add(new BasicNameValuePair("TAGS02", type_value));
+			params.add(new BasicNameValuePair("TAGS03", hlr));			
+			params.add(new BasicNameValuePair("TAGS04", vlr));			
+			params.add(new BasicNameValuePair("TAGS05", ftn));
+			params.add(new BasicNameValuePair("TAGS06", msc));
+			
+			Common co = new Common();
+			HashMap<String,String> ll = co.getDbCredential();
+			String myURL = "http://"+getNibIp(request)+"/cgi-bin/processData_CLI.sh";
+			String mdr = "";
+			try
+			{			
+				mdr = co.callPostDataUrl(myURL,params);				
+				//mdr = co.callURL("http://"+getNibIp(request)+"/temp/"+fileName);
+				
+			}
+			catch(Exception E)
+			{
+				fileLogger.debug("Exeption while request"+E.getMessage());
+			}
+			if(mdr.equalsIgnoreCase("ERROR"))
+			{
+				mdr="{\"STATUS\":\"3\"}";
+			}		
+			return mdr;		
+		}
+		
+		public String mtSmsGeoData(HttpServletRequest request)
+		{
+			String data = request.getParameter("data");
+			String ip = request.getParameter("ip");
+			String count = request.getParameter("count");
+			
+			fileLogger.debug("DATA RECIVED mtSmsGeoData "+data+",ip = "+ip+",count = "+count);
+			
+			new SMSIntercept().sendText(ip+"$"+count+"$"+data);
+			storeSms(data,ip,count);
+			return "";
+		}
+		
+		public void storeSms(String data,String ip,String count)
+		{
+			String[] msgData = data.split("\\$");
+			String query = "insert into geo_loc_mtsms (ip,count,calling_party_num,smsc_num,smsc_time,system_timestamp,sms_mtdata,logtime)"+
+							"values('"+ip+"','"+count+"','"+msgData[0]+"','"+msgData[1]+"','"+msgData[2]+"','"+msgData[3]+"','"+msgData[4]+"',now());";
+			new Common().executeDLOperation(query); 
+			
+		}
+		
+		public String cdrData(HttpServletRequest request)
+		{	
+			String data = request.getParameter("data");
+			String ip = request.getParameter("ip");
+			String count = request.getParameter("count");
+			ArrayList<String> pack = formtaPacket(data,ip,count);
+			
+			if(pack.get(20) != null && pack.get(20).equalsIgnoreCase("success"))
+			{
+				new ThreegOperations().set2gHoldStatus(pack.get(4));;
+			}
+			insertCDRData(pack,ip,count);
+			new SocketServer().sendText(pack);
+			return "";
+		}
+		public String pollData(HttpServletRequest request)
+		{	
+			try
+			{
+				String data = request.getParameter("data");
+				String ip = request.getParameter("ip");
+				String count = request.getParameter("count");
+				//ArrayList<String> pack = formtaPacket(data,ip,count);
+				JSONObject jo = new JSONObject(data);
+				Common co = new Common();
+				String query = "INSERT INTO cdrlogs(imsi, imei, ta,power, lat, lon, acc, packet)"
+						+ "values("+jo.getString("IMSI")+","+jo.getString("IMEI")+","+jo.getString("TA")+","+jo.getString("TA")+","+jo.getString("LAT")+","+jo.getString("LONG")+",'"+(jo.getString("LAT").equalsIgnoreCase("null")?'N':'Y')+"','"+data+"')";
+					co.executeDLOperation(query);
+				new TrackedImsiServer().sendText("recived");
+			}
+			catch(Exception E)
+			{
+				fileLogger.debug("POLL DATA Exception"+E.getMessage());
+			}
+			
+			
+				
+			return "";
+		}
+		
+		
+		
+		public void cdrData(String data,String ip,String count)
+		{	
+			ArrayList<String> pack = formtaPacket(data,ip,count);
+			new SocketServer().sendText(pack);
+			insertCDRData(pack,ip,count);
+		}
+		public ArrayList<String> formtaPacket(String dataPacket,String ip,String count)
+		{
+			String aa = dataPacket;
+			//String aa = "'{\"value\":\"Normal_LU    IMSI:404045000053267 IMEI:867466028723794 MSISDN:                 PTMSI:0x00000000 TMSI:0x00000000 OL:0xfffe NL:0x0006 CID:0x0001 Ta:0   RxL:-110 TStmp:310170-18:22:26 FTyp:FAIL_NO_SUITABLE_CELLS_IN_LOCATION_AREA\",\"channel\":\"stdout\"}'";
+			
+			//aa = aa.substring(1,aa.length()-1);
+			//fileLogger.debug("LENGTH : "+aa.length());
+			fileLogger.debug("data formated"+aa);
+			ArrayList<String> finalPacket = new ArrayList<String>();
+			ArrayList<String> returnPacket = new ArrayList<String>();
+			try
+			{	
+				
+				//JSONObject dd = new JSONObject(aa);
+				//fileLogger.debug(dd.toString());
+				//String [] bb = dd.get("value").toString().split(" ");
+				fileLogger.debug(aa);
+				String [] bb = aa.toString().split(" ");
+				ArrayList<String> packet = new ArrayList<String>();
+				Collections.addAll(packet, bb);
+				returnPacket.add(ip);
+				returnPacket.add(count);
+				for(int i=0;i< packet.size();i++)
+				{
+					
+					if(!packet.get(i).trim().equalsIgnoreCase(""))
+					{
+						
+						finalPacket.add(packet.get(i));
+					}
+				}
+				for(int i=0;i< finalPacket.size();i++)
+				{
+					
+					if(finalPacket.get(i).contains(":"))
+					{
+						String[] spilPack = finalPacket.get(i).split(":");
+						if(spilPack.length == 1)
+							returnPacket.add("null");
+						else
+							returnPacket.add(finalPacket.get(i).split(":")[1]);
+					}
+					else
+					{
+						returnPacket.add(finalPacket.get(i));
+					}			
+				}
+				
+				fileLogger.debug(returnPacket.toString());			
+			}
+			catch(Exception E)
+			{
+				fileLogger.debug(E.getMessage());
+			}
+			return returnPacket;
+		}
+		
+		public String insertCDRData(ArrayList<String> packet,String ip,String count)
+		{
+			if(packet.size()>0)
+			{
+				StringBuilder packetString = new StringBuilder();		
+				
+				for(int i=0;i<packet.size();i++)
+				{
+					if(i==0)
+						packetString.append("'"+packet.get(i)+"'");
+					else
+						packetString.append(",'"+packet.get(i)+"'");			
+				}
+				Common co = new Common();				
+				//String query = "INSERT INTO cdrlogs(ip, count, packet_type, imsi, imei, msisdn, ptmsi, tmsi,ol, nl, cid, ta, rxl, tstmp, ftyp, inserttime)"
+				//		+ "values('"+ip+"','"+count+"',"+packetString.toString()+")";
+				String query = "INSERT INTO cdrlogs(ip, count, stype,packet_type, imsi, imei, msisdn, ptmsi, tmsi, ol, ta, rxl, cgi, sysloc, msloc, band, ulrfcn, dlarfcn, outpow, tstmp, ftyp,psc)"
+								+ "values("+packetString.toString()+")";
+				co.executeDLOperation(query);
+			}
+			return "";
+		}
+		
+		public String insertGeoLocData(HttpServletRequest req)
+		{		
+				String data =req.getParameter("data");
+				Common co = new Common();				
+				String query = "INSERT INTO geolocdata(msisdn, imsi, imei, hmcc, hmnc, mcc, mnc, lac, cell, state,coordinate, hlr, vlr, ftn, logtime,mscaddr)"+
+								"values("+data+")";		
+				fileLogger.debug(query);
+				co.executeDLOperation(query);			
+				return "";
+		}
+		
+		
+		public JSONArray getGeoLocdata(HttpServletRequest request)
+		{
+			String startTime = request.getParameter("startTime");
+			String endTime = request.getParameter("endTime");
+			String query = "select * from geolocdata where logtime between '"+startTime+"' and '"+endTime+"' order by logtime desc";
+			fileLogger.debug(query);
+			return getJson(query);			
+		}
+		
+		
+		
+		/*public JSONArray getGeoLocdata(HttpServletRequest request)
+		{
+			Common co = new Common();
+			Statement smt = null;
+			Connection con = co.getDbConnection();
+			
+			JSONArray ja = new JSONArray();			
+			
+			
+			String startTime = request.getParameter("startTime");
+			String endTime = request.getParameter("endTime");
+			try
+			{
+				smt = con.createStatement();			
+				
+				String query = "select * from geolocdata where logtime between '"+startTime+"' and '"+endTime+"' order by logtime desc";
+				
+				fileLogger.debug(query);
+				
+				ResultSet rs = smt.executeQuery(query);
+				ResultSetMetaData rm = rs.getMetaData();
+				int totalColumns = rm.getColumnCount();
+				ArrayList<String> columns = new ArrayList<String>();
+				
+				for(int i=1;i<=totalColumns;i++ )
+				{
+					columns.add(rm.getColumnName(i));
+				}
+				
+				while(rs.next())
+				{				
+					JSONObject jb = new JSONObject();
+					for(String cname:columns)
+					{
+						jb.put(cname, rs.getString(cname));
+					}
+					ja.put(jb);
+				}			
+			}
+			catch(Exception E)
+			{
+				fileLogger.debug("Exeption while authenticating the user "+E.getMessage());
+			}
+			finally
+			{
+				try
+				{
+					smt.close();
+					con.close();
+				}
+				catch(Exception E)
+				{
+					
+				}
+			}	
+			return ja;
+		}*/
+		
+		 
+		public JSONArray getGeoLocdataLocal(HttpServletRequest request)
+		{
+			String startTime = request.getParameter("startTime");
+			String endTime = request.getParameter("endTime");
+			String id = request.getParameter("id");
+			//String query = "select * from geolocdata where logtime between '"+startTime+"' and '"+endTime+"' order by logtime desc";
+			String query = "select * from geolocdata where id="+id;
+			fileLogger.debug(query);
+			return getJson(query);			
+		}
+		
+		/*public JSONArray getGeoLocdataLocal(HttpServletRequest request)
+		{
+			Common co = new Common();
+			Statement smt = null;
+			Connection con = co.getDbConnection();
+			
+			JSONArray ja = new JSONArray();			
+			
+			
+			String id = request.getParameter("id");
+			try
+			{
+				smt = con.createStatement();			
+				String query = "select * from geolocdata where id="+id;
+				fileLogger.debug(query);
+				ResultSet rs = smt.executeQuery(query);
+				ResultSetMetaData rm = rs.getMetaData();
+				int totalColumns = rm.getColumnCount();
+				ArrayList<String> columns = new ArrayList<String>();
+				
+				for(int i=1;i<=totalColumns;i++ )
+				{
+					columns.add(rm.getColumnName(i));
+				}
+				
+				while(rs.next())
+				{				
+					JSONObject jb = new JSONObject();
+					for(String cname:columns)
+					{
+						jb.put(cname, rs.getString(cname));
+					}
+					ja.put(jb);
+				}			
+			}
+			catch(Exception E)
+			{
+				fileLogger.debug("Exeption while authenticating the user "+E.getMessage());
+			}
+			finally
+			{
+				try
+				{
+					smt.close();
+					con.close();
+				}
+				catch(Exception E)
+				{
+					
+				}
+			}	
+			return ja;
+		}*/
+		
+		public String spectrumData(HttpServletRequest request)
+		{	
+			String data1 = request.getParameter("data");			
+			String ip = request.getParameter("ip");
+			String count = request.getParameter("count");
+			fileLogger.debug("###############################mandeep dat###########################");
+			fileLogger.debug(data1);
+			fileLogger.debug(ip);
+			fileLogger.debug(count);
+			fileLogger.debug("###############################mandeep dat###########################");
+			
+			
+			String [] bb = null;
+			String [] lineFormat = null;
+			//String data1 = "1,2,3,4,\n,1,2,3,4,";	
+			lineFormat = data1.toString().split("\\n");
+				
+				//for(String lineData:lineFormat)
+			for(int i=0;i<lineFormat.length;i++)
+			{
+					
+				
+			String data = lineFormat[i];
+			
+			String[] pack = formtaSpecturmDataPacket(data,ip,count);
+			ArrayList<String> serverData = new ArrayList<String>();
+			serverData.add(ip);
+			serverData.add(count);			
+			/*for(String s:pack)
+			{
+				serverData.add(s);
+			}*/
+			for(int j=0;j<pack.length-1;j++)
+			{
+				if(j != 2)
+					serverData.add(pack[j]);
+				else
+				{
+					//String[] time = packet[j].trim().split(":");						
+					String dateTime = pack[j].trim()+"_"+pack[j+1].trim();
+					dateTime=dateTimeFormaterWids(dateTime);
+					serverData.add(dateTime);
+				}
+								
+			}
+			new SpectrumSocketServer().sendText(serverData);
+			insertSpecturmDataData(pack,ip,count);
+			
+			}
+			return "";
+		}		
+		
+		
+		public String[] formtaSpecturmDataPacket(String dataPacket,String ip,String count)
+		{
+			String aa = dataPacket;
+			
+			fileLogger.debug("\n********data formated specturmData **********\n "+aa);
+			String [] bb = null;
+			
+			try
+			{	
+				fileLogger.debug(aa);
+				bb = aa.toString().split(",");				
+			}
+			catch(Exception E)
+			{
+				fileLogger.debug(E.getMessage());
+			}
+			return bb;
+		}
+		
+		public String insertSpecturmDataData(String[] packet,String ip,String count)
+		{
+			if(packet.length>0)
+			{
+				StringBuilder packetString = new StringBuilder();
+				
+				for(int i=0;i<packet.length-1;i++)
+				{
+					if(i==0)
+						packetString.append("'"+packet[i].trim()+"'");
+					else if(i==2)
+					{
+						String[] time = packet[i+1].trim().split(":");						
+						String dateTime = packet[i].trim()+"_"+packet[i+1].trim();
+						dateTime=dateTimeFormaterWids(dateTime);
+						packetString.append(",'"+dateTime+"'");
+					}
+					else
+					{
+						
+						packetString.append(",'"+packet[i].trim()+"'");
+					}
+									
+				}
+				Common co = new Common();				
+				//String query = "INSERT INTO cdrlogs(ip, count, packet_type, imsi, imei, msisdn, ptmsi, tmsi,ol, nl, cid, ta, rxl, tstmp, ftyp, inserttime)"
+				//		+ "values('"+ip+"','"+count+"',"+packetString.toString()+")";
+				String query = "INSERT INTO wsdiData(ip,count,freq,power,tstmp)"
+								+ "values('"+ip+"','"+count+"',"+packetString.toString()+")";
+				co.executeDLOperation(query);
+			}
+			return "";
+		}
+		
+		
+		public String gpsData(HttpServletRequest request)
+		{	
+			String data = request.getParameter("data");
+			
+			String ip = request.getParameter("ip");
+			String count = request.getParameter("count");
+			fileLogger.debug("###############################GPS dat###########################");
+			fileLogger.debug(data);
+			fileLogger.debug(ip);
+			fileLogger.debug(count);
+			fileLogger.debug("###############################GPS dat###########################");
+			
+			
+				
+			
+			String[] pack = formatGPSDataPacket(data,ip,count);
+			ArrayList<String> serverData = new ArrayList<String>();
+			serverData.add(ip);
+			serverData.add(count);			
+			for(String s:pack)
+			{
+				serverData.add(s);
+			}
+			
+			
+			new GPSSocketServer().sendText(serverData);
+			insertGPSData(pack,ip,count);				
+			return "";
+		}
+		
+		public String[] formatGPSDataPacket(String dataPacket,String ip,String count)
+		{
+			String aa = dataPacket;			
+			fileLogger.debug("\n********data formated GPS **********\n "+aa);
+			String [] bb = null;
+			
+			try
+			{	
+				fileLogger.debug(aa);
+				bb = aa.toString().split("\\$");			
+			}
+			catch(Exception E)
+			{
+				fileLogger.debug(E.getMessage());
+			}
+			return bb;
+		}
+		
+		public String insertGPSData(String[] packet,String ip,String count)
+		{
+			if(packet.length>0)
+			{
+				StringBuilder packetString = new StringBuilder();		
+				
+				for(int i=0;i<packet.length;i++)
+				{
+					if(i==0)
+						packetString.append("'"+packet[i]+"'");
+					else
+						packetString.append(",'"+packet[i]+"'");			
+				}
+				Common co = new Common();				
+				//String query = "INSERT INTO cdrlogs(ip, count, packet_type, imsi, imei, msisdn, ptmsi, tmsi,ol, nl, cid, ta, rxl, tstmp, ftyp, inserttime)"
+				//		+ "values('"+ip+"','"+count+"',"+packetString.toString()+")";
+				String query = "INSERT INTO gpsData(ip, count, tstmp, s_status, lat, lato, lon, lono, speed,course, satellites, elev, eunit, roll, pres, acc, comp, temp1,temp2, gyx, gyy, gyz, tiltx, tilty, tiltz)"
+						+ "values('"+ip+"','"+count+"',"+packetString.toString()+")";
+				co.executeDLOperation(query);
+			}
+			return "";
+		}
+		
+		public JSONArray getGPSData(HttpServletRequest request)
+		{
+			String startTime = request.getParameter("startTime");
+			String endTime = request.getParameter("endTime");
+			String query = "select * from gpsData where to_timestamp(tstmp,'DDMMYY-HH24-MI-SS')::timestamp without time zone) between '"+startTime+"' and '"+endTime+"' and lat::numeric != 0 and lon::numeric !=0 and lat != '' and lon != '' order by logtime desc";
+			fileLogger.debug(query);
+			return getJson(query);			
+		}
+		
+		
+		/*public JSONArray getGPSData(HttpServletRequest request)
+		{
+			Common co = new Common();
+			Statement smt = null;
+			Connection con = co.getDbConnection();
+			
+			JSONArray ja = new JSONArray();
+			
+			
+			
+			String startTime = request.getParameter("startTime");
+			String endTime = request.getParameter("endTime");
+			try
+			{
+				smt = con.createStatement();			
+				String query = "select * from gpsData where logtime between '"+startTime+"' and '"+endTime+"' and lat != '-0.000000' and lon != '-0.000000' and lat != '' and lon != '' order by logtime desc";
+				fileLogger.debug(query);
+				ResultSet rs = smt.executeQuery(query);
+				ResultSetMetaData rm = rs.getMetaData();
+				int totalColumns = rm.getColumnCount();
+				ArrayList<String> columns = new ArrayList<String>();
+				
+				for(int i=1;i<=totalColumns;i++ )
+				{
+					columns.add(rm.getColumnName(i));
+				}
+				
+				while(rs.next())
+				{				
+					JSONObject jb = new JSONObject();
+					for(String cname:columns)
+					{
+						jb.put(cname, rs.getString(cname));
+					}
+					ja.put(jb);
+				}			
+			}
+			catch(Exception E)
+			{
+				fileLogger.debug("Exeption while authenticating the user "+E.getMessage());
+			}
+			finally
+			{
+				try
+				{
+					smt.close();
+					con.close();
+				}
+				catch(Exception E)
+				{
+					
+				}
+			}	
+			return ja;
+		}*/
+		public JSONArray getCDRGPSData(HttpServletRequest request)
+		{
+			String startTime = request.getParameter("startTime");
+			String endTime = request.getParameter("endTime");
+			String query = "select stype,ip,count,packet_type,imsi,imei,ta,rxl,cgi,sysloc,band,ulrfcn,dlarfcn,outpow,tstmp,inserttime,lat,lon,mobile_type,psc,angle,anglet from cdrGpsData where logtime between '"+startTime+"' and '"+endTime+"' order by logtime desc";
+			fileLogger.debug(query);
+			return getJson(query);			
+		}
+		
+		/*public JSONArray getCDRGPSData(HttpServletRequest request)
+		{
+			Common co = new Common();
+			Statement smt = null;
+			Connection con = co.getDbConnection();
+			
+			JSONArray ja = new JSONArray();
+			
+			
+			
+			String startTime = request.getParameter("startTime");
+			String endTime = request.getParameter("endTime");
+			try
+			{
+				smt = con.createStatement();			
+				String query = "select stype,ip,count,packet_type,imsi,imei,ta,rxl,cgi,sysloc,band,ulrfcn,dlarfcn,outpow,tstmp,inserttime,lat,lon,mobile_type from cdrGpsData where logtime between '"+startTime+"' and '"+endTime+"' order by logtime desc";
+				fileLogger.debug(query);
+				ResultSet rs = smt.executeQuery(query);
+				ResultSetMetaData rm = rs.getMetaData();
+				int totalColumns = rm.getColumnCount();
+				ArrayList<String> columns = new ArrayList<String>();
+				
+				for(int i=1;i<=totalColumns;i++ )
+				{
+					columns.add(rm.getColumnName(i));
+				}
+				
+				while(rs.next())
+				{				
+					JSONObject jb = new JSONObject();
+					for(String cname:columns)
+					{
+						
+						jb.put(cname, rs.getString(cname));
+					}
+					ja.put(jb);
+				}			
+			}
+			catch(Exception E)
+			{
+				fileLogger.debug("Exeption while authenticating the user "+E.getMessage());
+			}
+			finally
+			{
+				try
+				{
+					smt.close();
+					con.close();
+				}
+				catch(Exception E)
+				{
+					
+				}
+			}	
+			return ja;
+		}*/
+		
+		public String dateTimeFormaterWids(String dateTime)
+		{
+			
+			try
+			{	
+				/*String[] miliSeconds = dateTime.split("\\.");
+				if(miliSeconds[1].length() >=3)
+				{
+					miliSeconds[1] = miliSeconds[1].substring(0, 2);
+				}
+				else if(miliSeconds[1].length() ==1 )
+				{
+					miliSeconds[1] = "0"+miliSeconds[1];
+				}*/
+				
+				Date date = new SimpleDateFormat("dd/MM/yyyy_HH:mm:ss").parse(dateTime);				
+				dateTime = new SimpleDateFormat("ddMMyy-HH-mm-ss").format(date);
+				//dateTime = dateTime+"."+miliSeconds[1];
+			}
+			catch(Exception E)
+			{
+				fileLogger.debug(E.getMessage());
+			}
+			
+			
+			
+			return dateTime;
+		}
+		
+		public boolean truncateDb(HttpServletRequest request)
+		{
+			
+			
+			String query = "truncate cdrlogs;";
+			
+			List<String> queries =  new ArrayList<String>();
+			queries.add("delete from cdrlogs");
+			queries.add("delete from geolocdata");
+			queries.add("delete from gpsdata");
+			queries.add("delete from wsdidata");
+			Common co = new Common();
+			//co.executeDLOperation(query);
+			co.executeBatchOperation(queries);
+			return true;
+		}
+		
+		
+		public boolean truncateDbOpr(HttpServletRequest request)
+		{
+			
+			
+			String query = "truncate cdrlogs;";
+			
+			List<String> queries =  new ArrayList<String>();
+			queries.add("delete from oprrationdata");
+			queries.add("delete from btsoprparma");;
+			Common co = new Common();
+			//co.executeDLOperation(query);
+			co.executeBatchOperation(queries);
+			return true;
+		}
+		
+		public boolean uploadCSV(HttpServletRequest request,HttpServletResponse res)
+		{
+			res.setContentType("text/html");
+			int uploadSuccess = 0;
+			
+				 try
+				 {
+					 PrintWriter out = res.getWriter();
+					 Random randomGenerator = new Random();
+						
+						String tempUploadFolderName = ""+System.currentTimeMillis();
+						
+						String path=null;
+						
+						String absolutePath = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
+						absolutePath = absolutePath.substring(0,absolutePath.lastIndexOf("WEB-INF"));
+						path = absolutePath+ "/tempUploadFolder/";
+						
+						String childDirectoryPath = path + "\\" + tempUploadFolderName;
+						
+							fileLogger.debug("\n------------------------------------------------\n");
+							fileLogger.debug(" temporary folder path temp : "+path);
+							fileLogger.debug("\n------------------------------------------------\n");
+						
+						//creating the directory if not exist
+						checkOrCreateParentChildDirectory(path,tempUploadFolderName);			
+						
+						fileLogger.debug("\n------------------------------------------------\n");
+						fileLogger.debug(" checkOrCreateParentChildDirectory method execution done 1");
+						fileLogger.debug("\n------------------------------------------------\n");
+						
+						
+						//uploading the file file upload limit is 5mb
+						MultipartRequest multi = new MultipartRequest(request,childDirectoryPath,5000000);
+						
+						fileLogger.debug("\n------------------------------------------------\n");
+						fileLogger.debug(" uploading the file file upload limit is 5mb done 2");
+						fileLogger.debug("\n------------------------------------------------\n");
+						Enumeration files = multi.getFileNames();						
+						while (files.hasMoreElements())
+						{
+							//getting the file details
+							String name = (String)files.nextElement();						
+							String filename = multi.getFilesystemName(name);
+							String type = multi.getContentType(name);
+							//getting the file object
+							File f = multi.getFile(name);
+							saveCsvData(f);
+						}
+						uploadSuccess = 1;
+				 }
+				 catch(Exception E)
+				 {
+					 uploadSuccess=0;
+					 fileLogger.debug(E.getMessage());
+					 
+				 }
+				 finally
+				 {
+					 try
+					 {
+						 
+						 res.sendRedirect(String.format("%s%s", request.getContextPath(), "/views/administration.jsp?up="+uploadSuccess));
+					 }
+					 catch(Exception E)
+					 {
+						 fileLogger.debug(E.getMessage());
+					 }
+					 
+				 }
+				 
+			return true;
+		}
+
+		private void checkOrCreateParentChildDirectory(String parentPath,String childDirectoryName)
+		{
+		
+			File file=new File(parentPath);
+			
+			if(!file.exists())
+			{
+				file.mkdir();
+			}
+
+			String childPath = parentPath + "\\" + childDirectoryName;
+
+			File file1 = new File(childPath);
+
+			if (!file1.exists()){
+					file1.mkdir();
+			  }
+
+			
+			/*String mobilePhotos = childPath + "\\" + "photos";
+			File file2 = new File(mobilePhotos);
+			if (!file2.exists()){
+					file2.mkdir();
+			  }*/
+			
+		}
+		
+		public static void saveCsvData(File csvFile) 
+		{
+	       
+			BufferedReader br = null;
+	        
+			String line = "";
+	        String cvsSplitBy = ",";
+
+	        try 
+	        {
+
+	            
+	        	br = new BufferedReader(new FileReader(csvFile));
+	            int count=0;
+	        	while ((line = br.readLine()) != null) 
+	            {
+
+	                if(count !=0)
+	                {
+	                		String[] data = line.split(cvsSplitBy);
+		                	Common co = new Common();
+		    				String query = "INSERT INTO mobiletype(imsi, imei, mobile_type) values("+data[0]+","+data[1]+",'"+data[2]+"')";
+		    				co.executeDLOperation(query);
+		    				
+	                }
+	                count ++;
+	            }
+
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        } finally {
+	            if (br != null) {
+	                try {
+	                    br.close();
+	                } catch (IOException e) {
+	                    e.printStackTrace();
+	                }
+	            }
+	        }
+
+	    }
+		
+		public JSONArray getMobileType(HttpServletRequest request)
+		{
+			String startTime = request.getParameter("startTime");
+			String endTime = request.getParameter("endTime");
+			//String query = "select * from cdroprreport where logtime between '"+startTime+"' and '"+endTime+"'order by logtime desc";
+			String query = "select imsi,imei,mobile_type from mobiletype where logtim between '"+startTime+"' and '"+endTime+"' order by logtim desc";
+			fileLogger.debug(query);
+			return getJson(query);			
+		}
+		
+		/*public JSONArray getMobileType(HttpServletRequest request)
+		{
+			Common co = new Common();
+			Statement smt = null;
+			Connection con = co.getDbConnection();
+			
+			JSONArray ja = new JSONArray();
+			
+			
+			
+			String startTime = request.getParameter("startTime");
+			String endTime = request.getParameter("endTime");
+			try
+			{
+				smt = con.createStatement();			
+				String query = "select imsi,imei,mobile_type from mobiletype where logtim between '"+startTime+"' and '"+endTime+"' order by logtim desc";
+				fileLogger.debug(query);
+				ResultSet rs = smt.executeQuery(query);
+				ResultSetMetaData rm = rs.getMetaData();
+				int totalColumns = rm.getColumnCount();
+				ArrayList<String> columns = new ArrayList<String>();
+				
+				for(int i=1;i<=totalColumns;i++ )
+				{
+					columns.add(rm.getColumnName(i));
+				}
+				
+				while(rs.next())
+				{				
+					JSONObject jb = new JSONObject();
+					for(String cname:columns)
+					{
+						jb.put(cname, rs.getString(cname));
+					}
+					ja.put(jb);
+				}			
+			}
+			catch(Exception E)
+			{
+				fileLogger.debug("Exeption while authenticating the user "+E.getMessage());
+			}
+			finally
+			{
+				try
+				{
+					smt.close();
+					con.close();
+				}
+				catch(Exception E)
+				{
+					
+				}
+			}	
+			return ja;
+		}*/
+		
+		public boolean saveCdrOperations(HttpServletRequest request)
+		{
+			String name = request.getParameter("oname");
+			String addr = request.getParameter("oaddr");
+			Common co = new Common();
+			
+			String query = "insert into   oprrationdata(name,loc) values('"+name+"','"+addr+"')";
+			co.executeDLOperation(query);
+			return true;
+			
+		}
+		
+		
+		public boolean saveBcdrOperations(HttpServletRequest request)
+		{
+			String oprid = request.getParameter("baoprname");
+			String baopbts = request.getParameter("baopbts");
+			String batype = request.getParameter("batype");
+			String bagain = request.getParameter("bagain");
+			String baheight = request.getParameter("baheight");
+			String baelevation = request.getParameter("baelevation");
+			String badirection = request.getParameter("badirection");
+			String ttype = request.getParameter("ttype");
+			
+			Common co = new Common();
+			
+			//String query = "insert into   oprrationdata(name,loc) values('"+name+"','"+addr+"')";
+			String query = "INSERT INTO btsoprparma(oprid, btsid, atype, again, aheight, aelevation, adirection,ttype) VALUES ("+oprid+",'"+baopbts+"','"+batype+"','"+bagain+"','"+baheight+"','"+baelevation+"','"+badirection+"','"+ttype+"')";
+			co.executeDLOperation(query);
+			return true;
+			
+		}
+		
+		public JSONArray getLocBTStype(HttpServletRequest request)
+		{
+			String query = "select * from btstype order by name";
+			fileLogger.debug(query);
+			return getJson(query);			
+		}
+		
+		/*public JSONArray getLocBTStype(HttpServletRequest request)
+		{
+			Common co = new Common();
+			Statement smt = null;
+			Connection con = co.getDbConnection();
+			
+			JSONArray ja = new JSONArray();
+			
+			
+			
+			try
+			{
+				smt = con.createStatement();			
+				String query = "select * from btstype order by name";
+				fileLogger.debug(query);
+				ResultSet rs = smt.executeQuery(query);
+				ResultSetMetaData rm = rs.getMetaData();
+				int totalColumns = rm.getColumnCount();
+				ArrayList<String> columns = new ArrayList<String>();
+				
+				for(int i=1;i<=totalColumns;i++ )
+				{
+					columns.add(rm.getColumnName(i));
+				}
+				
+				while(rs.next())
+				{				
+					JSONObject jb = new JSONObject();
+					for(String cname:columns)
+					{
+						jb.put(cname, rs.getString(cname));
+					}
+					ja.put(jb);
+				}			
+			}
+			catch(Exception E)
+			{
+				fileLogger.debug("Exeption while authenticating the user "+E.getMessage());
+			}
+			finally
+			{
+				try
+				{
+					smt.close();
+					con.close();
+				}
+				catch(Exception E)
+				{
+					
+				}
+			}	
+			return ja;
+		}*/
+
+		
+		public JSONArray getLocOprations(HttpServletRequest request)
+		{
+			String query = "select id,name from oprrationdata order by name";
+			fileLogger.debug(query);
+			return getJson(query);			
+		}
+		
+		
+		
+		/*public JSONArray getLocOprations(HttpServletRequest request)
+		{
+			Common co = new Common();
+			Statement smt = null;
+			Connection con = co.getDbConnection();
+			
+			JSONArray ja = new JSONArray();
+			
+			
+			
+			try
+			{
+				smt = con.createStatement();			
+				String query = "select id,name from oprrationdata order by name";
+				fileLogger.debug(query);
+				ResultSet rs = smt.executeQuery(query);
+				ResultSetMetaData rm = rs.getMetaData();
+				int totalColumns = rm.getColumnCount();
+				ArrayList<String> columns = new ArrayList<String>();
+				
+				for(int i=1;i<=totalColumns;i++ )
+				{
+					columns.add(rm.getColumnName(i));
+				}
+				
+				while(rs.next())
+				{				
+					JSONObject jb = new JSONObject();
+					for(String cname:columns)
+					{
+						jb.put(cname, rs.getString(cname));
+					}
+					ja.put(jb);
+				}			
+			}
+			catch(Exception E)
+			{
+				fileLogger.debug("Exeption while authenticating the user "+E.getMessage());
+			}
+			finally
+			{
+				try
+				{
+					smt.close();
+					con.close();
+				}
+				catch(Exception E)
+				{
+					
+				}
+			}	
+			return ja;
+		}*/
+		
+		
+		
+		
+		public JSONArray getoprreportData(HttpServletRequest request)
+		{
+			String startTime = request.getParameter("startTime");
+			String endTime = request.getParameter("endTime");
+			String query = "select * from cdroprreport where logtime between '"+startTime+"' and '"+endTime+"'order by logtime desc";
+			fileLogger.debug(query);
+			return getJson(query);			
+		}
+		
+		public JSONArray getoprlogsData(HttpServletRequest request)
+		{
+			String startTime = request.getParameter("startTime");
+			String endTime = request.getParameter("endTime");
+			String query = "select *,oprname((mcc||mnc)::numeric) opr,getcountry(mcc::numeric) country from oprlogs where to_timestamp(tstmp,'DDMMYY-HH24-MI-SS')::timestamp without time zone) between '"+startTime+"' and '"+endTime+"'order by inserttime desc";
+			fileLogger.debug(query);
+			return getJson(query);			
+		}
+		
+		
+		public JSONArray getwidsReportData(HttpServletRequest request)
+		{
+			String startTime = request.getParameter("startTime");
+			String endTime = request.getParameter("endTime");
+			String type = request.getParameter("type");
+			String query = "select * from widsoprdata where logtime between '"+startTime+"' and '"+endTime+"'order by logtime desc";
+			fileLogger.debug(query);
+			
+			fileLogger.debug("Type"+type);
+			switch(Integer.parseInt(type))
+			{
+				case 1:
+					query="select * from widsoprdata where(freq,ip,power::numeric,DATE_TRUNC('min',to_timestamp(tstmp,'DDMMYY-HH24-MI-SS')::timestamp without time zone)) in (select distinct freq,ip,max(power::numeric),DATE_TRUNC('min',to_timestamp(tstmp,'DDMMYY-HH24-MI-SS')::timestamp without time zone) from widsoprdata where  (to_timestamp(tstmp,'DDMMYY-HH24-MI-SS')::timestamp without time zone) between '"+startTime+"' and '"+endTime+"' group by freq,DATE_TRUNC('min',to_timestamp(tstmp,'DDMMYY-HH24-MI-SS')::timestamp without time zone),ip) order by logtime asc";
+				break;
+				case 2:
+					query="select * from widsoprdata where(freq,ip,power::numeric,DATE_TRUNC('second',to_timestamp(tstmp,'DDMMYY-HH24-MI-SS')::timestamp without time zone)) in (select distinct freq,ip,max(power::numeric),DATE_TRUNC('second',to_timestamp(tstmp,'DDMMYY-HH24-MI-SS')::timestamp without time zone) from widsoprdata where (to_timestamp(tstmp,'DDMMYY-HH24-MI-SS')::timestamp without time zone) between '"+startTime+"' and '"+endTime+"' group by freq,DATE_TRUNC('second',to_timestamp(tstmp,'DDMMYY-HH24-MI-SS')::timestamp without time zone),ip) order by logtime asc";
+				break;
+			}
+			return getJson(query);			
+		}
+
+		/*public JSONArray getoprreportData(HttpServletRequest request)
+		{
+			Common co = new Common();
+			Statement smt = null;
+			Connection con = co.getDbConnection();
+			
+			JSONArray ja = new JSONArray();
+			
+
+			String startTime = request.getParameter("startTime");
+			String endTime = request.getParameter("endTime");
+			
+			try
+			{
+				smt = con.createStatement();			
+				String query = "select * from cdroprreport where logtime between '"+startTime+"' and '"+endTime+"'order by logtime desc";
+				fileLogger.debug(query);
+				ResultSet rs = smt.executeQuery(query);
+				ResultSetMetaData rm = rs.getMetaData();
+				int totalColumns = rm.getColumnCount();
+				ArrayList<String> columns = new ArrayList<String>();
+				
+				for(int i=1;i<=totalColumns;i++ )
+				{
+					columns.add(rm.getColumnName(i));
+				}
+				
+				while(rs.next())
+				{				
+					JSONObject jb = new JSONObject();
+					for(String cname:columns)
+					{
+						jb.put(cname, rs.getString(cname));
+					}
+					ja.put(jb);
+				}			
+			}
+			catch(Exception E)
+			{
+				fileLogger.debug("Exeption while authenticating the user "+E.getMessage());
+			}
+			finally
+			{
+				try
+				{
+					smt.close();
+					con.close();
+				}
+				catch(Exception E)
+				{
+					
+				}
+			}	
+			return ja;
+		}*/
+		
+		public JSONArray getCurrentActiveOperation(HttpServletRequest request)
+		{
+			Common co = new Common();
+			Statement smt = null;
+			Connection con = co.getDbConnection();
+			
+			JSONArray ja = new JSONArray();
+			
+			
+			
+			try
+			{
+				smt = con.createStatement();			
+				String query = "select oprrationdata.id,btsoprparma.id btsprmid,oprrationdata.name,loc,btstype.name as bts,atype,again,aheight,aelevation,adirection,ttype from oprrationdata inner join btsoprparma on (oprrationdata.id = btsoprparma.oprid) left join btstype on(btsoprparma.btsid = btstype.id) order by btsprmid desc;";
+				fileLogger.debug(query);
+				ResultSet rs = smt.executeQuery(query);
+				ResultSetMetaData rm = rs.getMetaData();
+				int totalColumns = rm.getColumnCount();
+				ArrayList<String> columns = new ArrayList<String>();
+				
+				for(int i=1;i<=totalColumns;i++ )
+				{
+					columns.add(rm.getColumnName(i));
+				}
+				
+				while(rs.next())
+				{				
+					JSONObject jb = new JSONObject();
+					for(String cname:columns)
+					{
+						jb.put(cname, rs.getString(cname));
+					}
+					ja.put(jb);
+				}			
+			}
+			catch(Exception E)
+			{
+				fileLogger.debug("Exeption while authenticating the user "+E.getMessage());
+			}
+			finally
+			{
+				try
+				{
+					smt.close();
+					con.close();
+				}
+				catch(Exception E)
+				{
+					
+				}
+			}	
+			return ja;
+		}
+		
+		
+		public JSONArray getJson(String query)
+		{
+			Common co = new Common();
+			Statement smt = null;
+			Connection con = co.getDbConnection();
+			
+			JSONArray ja = new JSONArray();
+			
+			
+			
+			try
+			{
+				smt = con.createStatement();			
+				//String query = "select oprrationdata.id,btsoprparma.id btsprmid,oprrationdata.name,loc,btstype.name as bts,atype,again,aheight,aelevation,adirection,ttype from oprrationdata inner join btsoprparma on (oprrationdata.id = btsoprparma.oprid) left join btstype on(btsoprparma.btsid = btstype.id) order by btsprmid desc;";
+				fileLogger.debug(query);
+				ResultSet rs = smt.executeQuery(query);
+				ResultSetMetaData rm = rs.getMetaData();
+				int totalColumns = rm.getColumnCount();
+				ArrayList<String> columns = new ArrayList<String>();
+				
+				for(int i=1;i<=totalColumns;i++ )
+				{
+					columns.add(rm.getColumnName(i));
+				}
+				int count = 0;
+				while(rs.next())
+				{				
+					
+					count++;
+					if(count >= 100000)
+					{
+						JSONObject jb = new JSONObject();
+						jb.put("result","fail");
+						jb.put("msg","Limit exceed");
+						ja = null;
+						ja = new JSONArray();
+						ja.put(jb);
+						break;
+					}
+					
+					JSONObject jb = new JSONObject();
+					for(String cname:columns)
+					{
+						if(rs.getString(cname) == null)
+						{
+							jb.put(cname, "");
+						}
+						else
+						{
+							jb.put(cname, rs.getString(cname));
+						}
+						
+					}
+					ja.put(jb);
+				}			
+			}
+			catch(Exception E)
+			{
+				fileLogger.debug("Exeption while authenticating the user "+E.getMessage());
+			}
+			finally
+			{
+				try
+				{
+					smt.close();
+					con.close();
+				}
+				catch(Exception E)
+				{
+					
+				}
+			}	
+			return ja;
+		}
+		
+		public JSONArray getMobileTypeAll(HttpServletRequest request)
+		{
+				String query = "select imsi,imei,mobile_type from mobiletype";
+				fileLogger.debug(query);
+				return getJson(query);
+		}
+		
+		
+		/*********************************new spectrum data*************************/
+		
+		public String spectrumDataAntena(HttpServletRequest request)
+		{	
+			String data1 = request.getParameter("data");			
+			String ip = request.getParameter("ip");
+			String count = request.getParameter("count");
+			fileLogger.debug("###############################mandeep dat###########################");
+			fileLogger.debug(data1);
+			fileLogger.debug(ip);
+			fileLogger.debug(count);
+			fileLogger.debug("###############################mandeep dat###########################");
+			
+			
+			String [] bb = null;
+			String [] lineFormat = null;
+			//String data1 = "1,2,3,4,\n,1,2,3,4,";	
+			lineFormat = data1.toString().split("\\n");
+				
+				//for(String lineData:lineFormat)
+			for(int i=0;i<lineFormat.length;i++)
+			{
+					
+				
+			String data = lineFormat[i];
+			
+			String[] pack = formtaSpecturmDataPacketAngle(data,ip,count);
+			ArrayList<String> serverData = new ArrayList<String>();
+			serverData.add(ip);
+			serverData.add(count);			
+			/*for(String s:pack)
+			{
+				serverData.add(s);
+			}*/
+			for(int j=0;j<pack.length-1;j++)
+			{
+				if(j != 2)
+					serverData.add(pack[j]);
+				else
+				{
+					//String[] time = packet[j].trim().split(":");						
+					String dateTime = pack[j].trim()+"_"+pack[j+1].trim();
+					dateTime=dateTimeFormaterWids(dateTime);
+					serverData.add(dateTime);
+				}
+								
+			}
+			new SpectrumAngleSocketServer().sendText(serverData);
+			insertSpecturmDataDataAngle(pack,ip,count);
+			
+			}
+			return "";
+		}		
+		
+		
+		public String[] formtaSpecturmDataPacketAngle(String dataPacket,String ip,String count)
+		{
+			String aa = dataPacket;
+			
+			fileLogger.debug("\n********data formated specturmData **********\n "+aa);
+			String [] bb = null;
+			
+			try
+			{	
+				fileLogger.debug(aa);
+				bb = aa.toString().split(",");				
+			}
+			catch(Exception E)
+			{
+				fileLogger.debug(E.getMessage());
+			}
+			return bb;
+		}
+		
+		public String insertSpecturmDataDataAngle(String[] packet,String ip,String count)
+		{
+			if(packet.length>0)
+			{
+				StringBuilder packetString = new StringBuilder();
+				
+				for(int i=0;i<packet.length-1;i++)
+				{
+					if(i==0)
+						packetString.append("'"+packet[i].trim()+"'");
+					else if(i==2)
+					{
+						String[] time = packet[i+1].trim().split(":");						
+						String dateTime = packet[i].trim()+"_"+packet[i+1].trim();
+						dateTime=dateTimeFormaterWids(dateTime);
+						packetString.append(",'"+dateTime+"'");
+					}
+					else
+					{
+						
+						packetString.append(",'"+packet[i].trim()+"'");
+					}
+									
+				}
+				Common co = new Common();				
+				//String query = "INSERT INTO cdrlogs(ip, count, packet_type, imsi, imei, msisdn, ptmsi, tmsi,ol, nl, cid, ta, rxl, tstmp, ftyp, inserttime)"
+				//		+ "values('"+ip+"','"+count+"',"+packetString.toString()+")";
+				String query = "INSERT INTO wsdiDataAngle(ip,count,anglet,angle,tstmp)"
+								+ "values('"+ip+"','"+count+"',"+packetString.toString()+")";
+				co.executeDLOperation(query);
+			}
+			return "";
+		}
+		
+		
+		public JSONArray getSpectrumDataAngle(HttpServletRequest request)
+		{	
+			String startTime = request.getParameter("startTime");
+			String endTime = request.getParameter("endTime");
+			String query = "Select  * from wsdidataangle where logtime between '"+startTime+"' and '"+endTime+"'";
+			fileLogger.debug(query);
+			return getJson(query);
+		}
+		
+		public String oprData(HttpServletRequest request)
+		{	
+			String data = request.getParameter("data");
+			String ip = request.getParameter("ip");
+			String count = request.getParameter("count");
+			data = "'"+data.replaceAll("\\$", "','")+"'";
+			//new SocketServer().sendText(pack);
+			Common co = new Common();	
+			String query = "INSERT INTO oprlogs(ip, count, packet_type, freq, band, arfcn, mcc, mnc, lac,cell, ncc, bcc, rssi, snr, ta, sysloc, tstmp"+
+			") VALUES ('"+ip+"','"+count+"',"+data+")";
+			co.executeDLOperation(query);
+			new opretorDataServer().sendText("network");
+			return "";
+		}
+		
+		
+		public boolean uploadGpsData(HttpServletRequest request,HttpServletResponse res)
+		{
+			res.setContentType("text/html");
+			int uploadSuccess = 0;
+			
+				 try
+				 {
+					 PrintWriter out = res.getWriter();
+						
+						String tempUploadFolderName = ""+System.currentTimeMillis();
+						
+						String path=null;
+						
+						String absolutePath = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
+						absolutePath = absolutePath.substring(0,absolutePath.lastIndexOf("WEB-INF"));
+						path = absolutePath+ "/GpsDataUploadFolder/";
+						
+						String childDirectoryPath = path + "\\" + tempUploadFolderName;
+						
+							fileLogger.debug("\n------------------------------------------------\n");
+							fileLogger.debug(" temporary folder path temp : "+path);
+							fileLogger.debug("\n------------------------------------------------\n");
+						
+						//creating the directory if not exist
+						checkOrCreateParentChildDirectory(path,tempUploadFolderName);			
+						
+						fileLogger.debug("\n------------------------------------------------\n");
+						fileLogger.debug(" checkOrCreateParentChildDirectory method execution done 1");
+						fileLogger.debug("\n------------------------------------------------\n");
+						
+						
+						//uploading the file file upload limit is 5gb
+						MultipartRequest multi = new MultipartRequest(request,childDirectoryPath,500000000);
+						
+						fileLogger.debug("\n------------------------------------------------\n");
+						fileLogger.debug(" uploading the file,file upload limit is 5gb done 2");
+						fileLogger.debug("\n------------------------------------------------\n");
+						Enumeration files = multi.getFileNames();						
+						while (files.hasMoreElements())
+						{
+							//getting the file details
+							String name = (String)files.nextElement();						
+							String filename = multi.getFilesystemName(name);
+							String type = multi.getContentType(name);
+							//getting the file object
+							File f = multi.getFile(name);
+							saveGpsData(f);
+						}
+						uploadSuccess = 1;
+				 }
+				 catch(Exception E)
+				 {
+					 uploadSuccess=0;
+					 fileLogger.debug(E.getMessage());
+					 
+				 }
+				 finally
+				 {
+					 try
+					 {
+						 
+						 res.sendRedirect(String.format("%s%s", request.getContextPath(), "/views/administration.jsp?up="+uploadSuccess));
+					 }
+					 catch(Exception E)
+					 {
+						 fileLogger.debug(E.getMessage());
+					 }
+					 
+				 }
+				 
+			return true;
+		}
+
+
+public static void saveGpsData(File csvFile) 
+		{
+	       
+			BufferedReader br = null;
+	        Common co = new Common();
+			String line = "";
+	        String cvsSplitBy = ";";
+			List<String> queries = new ArrayList<String>();
+
+	        try 
+	        {
+
+	            
+	        	br = new BufferedReader(new FileReader(csvFile));
+	            long count=0;
+				long rowCount=0;
+				String query=null;
+				String gpsDate=null;
+				String gpsTime=null;
+				String gpsAltitude=null;
+				String gpsLat=null;
+				String gpsLong=null;
+				String gpsDateAndTime=null;
+	        	while ((line = br.readLine()) != null) 
+	            {
+                    count++;
+	                if(count !=1)
+	                {
+	                		String[] data = line.split(cvsSplitBy);
+							gpsDate=data[0];
+							gpsTime=data[1];
+							gpsAltitude=data[2];
+							gpsLong=data[3];
+							gpsLat=data[4];
+							double doubleLong=Double.parseDouble(gpsLong);
+							double doubleLat=Double.parseDouble(gpsLat);
+							if(!(doubleLong==0.00 && doubleLat==0.00))
+							{
+								if(gpsAltitude.indexOf(".")!=-1){
+								String[] gpsAltitudeArr=gpsAltitude.split("\\.");
+							gpsAltitude=gpsAltitudeArr[0]+"."+ ((gpsAltitudeArr[1].length()>6)?gpsAltitudeArr[1].substring(0,6):gpsAltitudeArr[1]);
+							}
+							if(gpsLong.indexOf(".")!=-1){
+							String[] gpsLongArr=gpsLong.split("\\.");
+							gpsLong=gpsLongArr[0]+"."+ ((gpsLongArr[1].length()>6)?gpsLongArr[1].substring(0,6):gpsLongArr[1]);
+							}
+                            if(gpsLat.indexOf(".")!=-1){
+							String[] gpsLatArr=gpsLat.split("\\.");
+							gpsLat=gpsLatArr[0]+"."+ ((gpsLatArr[1].length()>6)?gpsLatArr[1].substring(0,6):gpsLatArr[1]);
+						    } 
+							gpsTime=gpsTime.substring(0,gpsTime.indexOf("."));
+							gpsDateAndTime=gpsDate+" "+gpsTime;
+				            SimpleDateFormat sdfParser = new SimpleDateFormat( "yyyy-MM-dd hh:mm:ss" );
+							Date date = sdfParser.parse(gpsDateAndTime);
+							Calendar cal = Calendar.getInstance();
+							cal.setTime(date);
+							cal.add(Calendar.HOUR,-5);
+							cal.add(Calendar.MINUTE,-30);
+							date=cal.getTime();
+			                SimpleDateFormat sdfFormatter = new SimpleDateFormat( "ddMMyy-hh-mm-ss" );
+							gpsDateAndTime=sdfFormatter.format(date);
+		                	
+							rowCount++;
+query="insert into gpsdata(ip,count,tstmp,s_status,lat,lato,lon,lono,speed,course,satellites,elev,eunit,roll,pres,acc,comp,temp1,temp2,gyx,gyy,gyz,tiltx,tilty,tiltz) values('aronia','"+rowCount+"','"+gpsDateAndTime+"','NA','"+gpsLat+"','NA','"+gpsLong+"','NA','0','0','0','"+gpsAltitude+"','NA','0','0','0','0','0','0','0','0','0','0','0','0')";
+							queries.add(query);
+							}	
+	                }
+	            }
+				co.executeBatchOperation(queries);
+
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        } finally {
+	            if (br != null) {
+	                try {
+	                    br.close();
+	                } catch (IOException e) {
+	                    e.printStackTrace();
+	                }
+	            }
+	        }
+
+	    }
+
+public String scheduleSubscriberSearch(HttpServletRequest request)
+{
+	String scheduleStatus="failed";
+	String cmdType = request.getParameter("cmdType");
+	String reqType = request.getParameter("reqType");
+	String idType = request.getParameter("idType");
+	String type_value = request.getParameter("type_value");
+	String vlr = request.getParameter("vlr");
+	String hlr = request.getParameter("hlr");
+	String ftn = request.getParameter("ftn");
+	String msc = request.getParameter("msc");
+	String fileName = request.getParameter("fileName");
+	String firstDelayRequired=request.getParameter("firstDelayRequired");
+	String periodicity=request.getParameter("periodicity");
+	String nibIp=request.getParameter("nibIp");
+	Common co = new Common();	
+	String query = "insert into job_details(cmd_type, file_name, ftn, hlr, msc, id_type, req_type, type_value,vlr,status,periodicity,nibip) values ('"+cmdType+"','"+fileName+"','"+ftn+"','"+hlr+"','"+msc+"','"+idType+"','"+reqType+"','"+type_value+"','"+vlr+"','start',"+periodicity+",'"+nibIp+"')";
+	if(co.executeDLOperation(query)){
+		try
+		{
+			scheduleStatus="successful";
+			Statement smt = co.getDbConnection().createStatement();			
+			query = "select id from job_details where type_value='"+type_value+"'";
+			String id="";
+			fileLogger.debug(query);
+			ResultSet rs = smt.executeQuery(query);
+			while(rs.next())
+			{
+					id=rs.getString("id");
+			}
+		Timer timer=SingleTimer.getInstance().getTimer();
+		GeoTask geoTask=new GeoTask(cmdType,fileName,ftn,hlr,msc,idType,reqType,type_value,vlr,nibIp);
+		
+		if(firstDelayRequired.equalsIgnoreCase("yes")){
+		timer.scheduleAtFixedRate(geoTask, Long.parseLong(periodicity), Long.parseLong(periodicity));
+		fileLogger.debug("size at scheduleSubscriberSearch start:"+ScheduledTaskObjectHandler.getTaskObjectMapSize());
+		ScheduledTaskObjectHandler.setScheduledTaskObject(id,geoTask);
+		fileLogger.debug("size at scheduleSubscriberSearch end:"+ScheduledTaskObjectHandler.getTaskObjectMapSize());
+		}else{
+		timer.scheduleAtFixedRate(geoTask, 0, Long.parseLong(periodicity));
+		fileLogger.debug("size at scheduleSubscriberSearch start:"+ScheduledTaskObjectHandler.getTaskObjectMapSize());
+		ScheduledTaskObjectHandler.setScheduledTaskObject(id,geoTask);
+		fileLogger.debug("size at scheduleSubscriberSearch end:"+ScheduledTaskObjectHandler.getTaskObjectMapSize());
+		}
+	}catch(Exception e){
+		fileLogger.debug("problem is :"+e.getMessage());
+	}
+	}
+	return scheduleStatus;
+}
+
+public JSONArray getAllScheduledSubscribers(HttpServletRequest request)
+{
+	Common co = new Common();
+	Statement smt = null;
+	Connection con = co.getDbConnection();
+	JSONArray ja = new JSONArray();
+	try
+	{
+		smt = con.createStatement();			
+		String query = "select * from job_details";
+		fileLogger.debug(query);
+		ResultSet rs = smt.executeQuery(query);
+		
+		while(rs.next())
+		{
+			JSONObject jo = new JSONObject();
+			jo.put("id", rs.getString("id"));
+			jo.put("cmd_type", rs.getString("cmd_type"));
+			jo.put("file_name", rs.getString("file_name"));
+			jo.put("ftn", rs.getString("ftn"));
+			jo.put("hlr", rs.getString("hlr"));
+			jo.put("msc", rs.getString("msc"));
+			jo.put("id_type", rs.getString("id_type"));
+			jo.put("req_type", rs.getString("req_type"));
+			jo.put("type_value", rs.getString("type_value"));
+			jo.put("vlr", rs.getString("vlr"));
+			jo.put("status", rs.getString("status"));
+			jo.put("periodicity", rs.getString("periodicity"));
+			ja.put(jo);
+		}			
+	}
+	catch(Exception E)
+	{
+		fileLogger.debug("Exeption while authenticating the user "+E.getMessage());
+	}
+	finally
+	{
+		try
+		{
+			smt.close();
+			con.close();
+		}
+		catch(Exception E)
+		{
+			
+		}
+	}	
+	return ja;
+}
+
+public String startScheduledTask(HttpServletRequest request)
+{
+	Common co = new Common();
+	Statement smt = null;
+	Connection con = co.getDbConnection();
+	Timer timer=SingleTimer.getInstance().getTimer();
+	String startStatus="failed";
+	String id=request.getParameter("id");
+	String periodicity=request.getParameter("periodicity");
+	try
+	{
+		smt = con.createStatement();			
+		String query = "select * from job_details where id="+id;
+		fileLogger.debug(query);
+		ResultSet rs = smt.executeQuery(query);
+		while(rs.next())
+		{
+			fileLogger.debug("size at startScheduledTask start:"+ScheduledTaskObjectHandler.getTaskObjectMapSize());
+			GeoTask geoTask=new GeoTask(rs.getString("cmd_type"),rs.getString("file_name"),rs.getString("ftn"),rs.getString("hlr"),rs.getString("msc"),rs.getString("id_type"),rs.getString("req_type"),rs.getString("type_value"),rs.getString("vlr"),rs.getString("nibip"));
+			timer.scheduleAtFixedRate(geoTask, 0, Long.parseLong(periodicity));
+			ScheduledTaskObjectHandler.setScheduledTaskObject(id,geoTask);
+			query="update job_details set status='start',periodicity="+Long.parseLong(request.getParameter("periodicity"))+" where id="+Integer.parseInt(request.getParameter("id"));
+			fileLogger.debug(query);
+			co.executeDLOperation(query);
+			fileLogger.debug("size at startScheduledTask end:"+ScheduledTaskObjectHandler.getTaskObjectMapSize());
+			startStatus="successful";
+		}			
+	}
+	catch(Exception E)
+	{
+		E.printStackTrace();
+		//fileLogger.debug("Exception is:"+E.getMessage());
+	}
+	finally
+	{
+		try
+		{
+			smt.close();
+			con.close();
+		}
+		catch(Exception E)
+		{
+			
+		}
+	}
+	return startStatus;
+}
+
+public  String stopScheduledTask(HttpServletRequest request)
+{
+	Common co = new Common();
+	Statement smt = null;
+	String id=request.getParameter("id");
+	Timer timer=SingleTimer.getInstance().getTimer();
+	GeoTask geoTask=ScheduledTaskObjectHandler.getScheduledTaskObject(id);
+	geoTask.cancel();
+	timer.purge();
+	fileLogger.debug("size at stopScheduledTask start:"+ScheduledTaskObjectHandler.getTaskObjectMapSize());
+	ScheduledTaskObjectHandler.removeScheduledTaskObject(id);
+	String query="update job_details set status='stop' where id="+Integer.parseInt(id);
+	fileLogger.debug(query);
+	co.executeDLOperation(query);
+	fileLogger.debug("size at stopScheduledTask end:"+ScheduledTaskObjectHandler.getTaskObjectMapSize());
+	return "successful";
+}
+
+public String changePeriodicityOfScheduledTask(HttpServletRequest request)
+{
+	String changePeriodicityStatus="failed";
+	Common co = new Common();
+	Statement smt = null;
+	Connection con = co.getDbConnection();
+	String id=request.getParameter("id");
+	String periodicity=request.getParameter("periodicity");
+	String status=request.getParameter("status");
+	String query="";
+	try
+	{
+		if(status.equalsIgnoreCase("stop")){
+		query = "update job_details set periodicity="+periodicity+" where id="+id;
+		fileLogger.debug(query);
+		boolean updationStatus=co.executeDLOperation(query);
+		if(updationStatus){
+			changePeriodicityStatus="successful";
+			fileLogger.debug("periodicity changed successfully with status:"+status);
+		}
+		}else
+		{
+			fileLogger.debug("1");
+		Timer timer=SingleTimer.getInstance().getTimer();;
+		GeoTask geoTask=ScheduledTaskObjectHandler.getScheduledTaskObject(id);
+		geoTask.cancel();
+		timer.purge();
+		fileLogger.debug("size at changePeriodicityOfScheduledTask start:"+ScheduledTaskObjectHandler.getTaskObjectMapSize());
+		ScheduledTaskObjectHandler.removeScheduledTaskObject(id);		
+		fileLogger.debug("size at changePeriodicityOfScheduledTask mid:"+ScheduledTaskObjectHandler.getTaskObjectMapSize());
+		query="select * from job_details where id="+id;
+		fileLogger.debug(query);
+		smt = con.createStatement();
+		ResultSet rs = smt.executeQuery(query);
+		while(rs.next())
+		{
+				String cmdType=rs.getString("cmd_type");
+				String fileName=rs.getString("file_name");
+				String ftn=rs.getString("ftn");
+				String hlr=rs.getString("hlr");
+				String msc=rs.getString("msc");
+				String idType=rs.getString("id_type");
+				String reqType=rs.getString("req_type");
+				String typeVal=rs.getString("type_value");
+				String vlr=rs.getString("vlr");
+				String nibIp=rs.getString("nibip");
+				GeoTask newGeoTask=new GeoTask(cmdType,fileName,ftn,hlr,msc,idType,reqType,typeVal,vlr,nibIp);
+				timer.scheduleAtFixedRate(newGeoTask, 0, Long.parseLong(periodicity));
+				ScheduledTaskObjectHandler.setScheduledTaskObject(id,newGeoTask);
+			
+		}
+		fileLogger.debug("size at changePeriodicityOfScheduledTask end:"+ScheduledTaskObjectHandler.getTaskObjectMapSize());
+		query = "update job_details set periodicity="+periodicity+" where id="+id;
+		fileLogger.debug(query);
+		boolean updationStatus=co.executeDLOperation(query);
+		if(updationStatus){
+			changePeriodicityStatus="successful";
+			fileLogger.debug("periodicity changed successfully with status:"+status);
+	}
+	}
+	}
+	catch(Exception E)
+	{
+		E.printStackTrace();
+		//fileLogger.debug("Exception is:"+E.getMessage());
+	}
+	finally
+	{
+		try
+		{
+			smt.close();
+			con.close();
+		}
+		catch(Exception E)
+		{
+			
+		}
+	}
+	return changePeriodicityStatus;
+}
+
+public String deleteScheduledTask(HttpServletRequest request)
+{
+	String deleteStatus="failed";
+	Common co = new Common();
+	String id=request.getParameter("id");
+	String status=request.getParameter("status");
+	try
+	{			
+		String query = "delete from  job_details where id="+id;
+		fileLogger.debug(query);
+        if(co.executeDLOperation(query)){
+        	fileLogger.debug("Scheduled Task Deleted");
+        }
+        if(status.equalsIgnoreCase("start")){
+        	fileLogger.debug("size at deleteScheduledTask start:"+ScheduledTaskObjectHandler.getTaskObjectMapSize());
+    		Timer timer=SingleTimer.getInstance().getTimer();
+    		GeoTask geoTask=ScheduledTaskObjectHandler.getScheduledTaskObject(id);
+    		fileLogger.debug("size at deleteScheduledTask mid:"+ScheduledTaskObjectHandler.getTaskObjectMapSize());
+    		geoTask.cancel();
+    		timer.purge();
+    		fileLogger.debug("size at deleteScheduledTask end:"+ScheduledTaskObjectHandler.getTaskObjectMapSize());
+    		ScheduledTaskObjectHandler.removeScheduledTaskObject(id);	
+        }
+        deleteStatus="successful";
+	}
+	catch(Exception E)
+	{
+		E.printStackTrace();
+		//fileLogger.debug("Exeption is:"+E.getMessage());
+	}
+	finally
+	{
+		try
+		{
+		}
+		catch(Exception E)
+		{
+			
+		}
+	}
+	return deleteStatus;
+}
+
+	public String setSelectedNibIp(HttpServletRequest request){
+		String selectedNibIp=request.getParameter("selectedNibIp");
+		fileLogger.debug("the selected nib ip is :"+selectedNibIp);
+	HttpSession session=request.getSession(false);
+	fileLogger.debug("the selected nib ip");
+	session.setAttribute("currentNib",selectedNibIp);
+	fileLogger.debug("the selected nib ip is :");
+	return "successful";
+	}
+	
+	public JSONArray getBtsInfoPerApplication(HttpServletRequest request)
+	{
+		Common co = new Common();
+		Statement smt = null;
+		Connection con = co.getDbConnection();
+		JSONArray ja = new JSONArray();
+		try
+		{
+			smt = con.createStatement();			
+			String query = "select * from view_btsinfo where application_name='"+request.getParameter("applicationName")+"' order by grp_name";
+			fileLogger.debug(query);
+			ResultSet rs = smt.executeQuery(query);
+			
+			while(rs.next())
+			{
+				JSONObject jo = new JSONObject();
+				jo.put("b_id", rs.getString("b_id"));
+				jo.put("ip", rs.getString("ip"));
+				jo.put("statuscode", rs.getString("statuscode"));
+				jo.put("cellcode", rs.getString("cellcode"));
+				jo.put("typeid", rs.getString("typeid"));
+				jo.put("typename", rs.getString("typename"));
+				jo.put("status", rs.getString("status"));
+				jo.put("cellstatus", rs.getString("cellstatus"));
+				jo.put("dcode", rs.getString("dcode"));
+				jo.put("dname", rs.getString("dname"));
+				jo.put("sytemid", rs.getString("sytemid"));
+				jo.put("code", rs.getString("code"));
+				jo.put("grp_id", rs.getString("grp_id"));
+				jo.put("grp_name", rs.getString("grp_name"));
+				jo.put("application_id", rs.getString("application_id"));
+				jo.put("application_name", rs.getString("application_name"));
+				jo.put("application_status", rs.getString("application_status"));
+				ja.put(jo);
+			}			
+		}
+		catch(Exception E)
+		{
+			fileLogger.debug("Exeption while authenticating the user "+E.getMessage());
+		}
+		finally
+		{
+			try
+			{
+				smt.close();
+				con.close();
+			}
+			catch(Exception E)
+			{
+				
+			}
+		}	
+		return ja;
+}
+	
+	public JSONArray getNodeWiseReport(HttpServletRequest request)
+	{
+		String nodeName = request.getParameter("nodeName");
+		String mainFilter = request.getParameter("mainFilter"); 
+		String subFilter = request.getParameter("subFilter");
+		String operationStartTime = request.getParameter("operationStartTime");
+		String whereParam = "";
+		String whereCondition="";
+		String query="";
+		if(mainFilter.equalsIgnoreCase("ta")){
+			if(subFilter.equalsIgnoreCase("lessthan5")){
+				whereCondition="ta::numeric >2 and ta::numeric<=5";
+			}else if(subFilter.equalsIgnoreCase("morethan5")){
+				whereCondition="ta::numeric >5";	
+			}else{
+				whereCondition="ta='"+subFilter+"'";
+			}
+			query="select * from cdrlogs where "+whereCondition+" and inserttime>='"+operationStartTime+"'";
+		}else{
+			if(subFilter.equalsIgnoreCase("morethan-55")){
+				whereCondition="rxl::numeric>'-55'";
+			}else if(subFilter.equalsIgnoreCase("morethan-75")){
+				whereCondition="rxl::numeric<=-55 and rxl::numeric>-75";	
+			}else if(subFilter.equalsIgnoreCase("morethan-95")){
+				whereCondition="rxl::numeric<=-75 and rxl::numeric>-95";	
+			}else if(subFilter.equalsIgnoreCase("lessthan-95")){
+				whereCondition="rxl::numeric<=-95";
+			}else{
+				whereCondition="rxl='"+subFilter+"'";	
+			}
+			query="select * from cdrlogs where "+whereCondition+" and inserttime>='"+operationStartTime+"'";
+		}
+		Common co = new Common();
+		Statement smt = null;
+		Connection con = co.getDbConnection();
+		JSONArray ja = new JSONArray();
+		try
+		{
+			smt = con.createStatement();			
+			fileLogger.debug(query);
+			ResultSet rs = smt.executeQuery(query);
+			
+			while(rs.next())
+			{	
+				JSONObject jo = new JSONObject();
+				jo.put("stype", rs.getString("stype"));
+				jo.put("ip", rs.getString("ip"));
+				jo.put("count", rs.getString("count"));
+				jo.put("imsi", rs.getString("imsi"));
+				jo.put("imei", rs.getString("imei"));
+				jo.put("ta", rs.getString("ta"));
+				jo.put("rxl", rs.getString("rxl"));
+				jo.put("cgi", rs.getString("cgi"));
+				jo.put("sysloc", rs.getString("sysloc"));
+				jo.put("band", rs.getString("band"));
+				jo.put("ulrfcn", rs.getString("ulrfcn"));
+				jo.put("dlarfcn", rs.getString("dlarfcn"));
+				jo.put("outpow", rs.getString("outpow"));
+				jo.put("tstmp", rs.getString("tstmp"));
+				jo.put("psc", rs.getString("psc"));
+				jo.put("inserttime", rs.getString("inserttime"));
+				ja.put(jo);
+			}			
+		}
+		catch(Exception E)
+		{
+			fileLogger.debug("Exeption while authenticating the user "+E.getMessage());
+		}
+		finally
+		{
+			try
+			{
+				smt.close();
+				con.close();
+			}
+			catch(Exception E)
+			{
+				
+			}
+		}	
+		return ja;
+}
+		
+}

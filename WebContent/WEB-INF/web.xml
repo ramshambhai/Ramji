@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>locator_esufi_latest</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>views/index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  <filter>
+    <filter-name>LoginFilter</filter-name>
+    <filter-class>in.vnl.msgapp.LoginFilter</filter-class>
+    <init-param>
+      <param-name>ignore-login-path</param-name>
+      <param-value>/views/login.jsp</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>LoginFilter</filter-name>
+    <url-pattern>/views/*</url-pattern>
+  </filter-mapping>
+  <listener>
+    <description>Auto start service to start NibAlarmClient</description>
+    <listener-class>in.vnl.msgapp.NibAlarmClient</listener-class>
+  </listener>
+  <listener>
+    <description>Starting Scheduler</description>
+    <listener-class>in.vnl.scheduler.Scheduler</listener-class>
+  </listener>
+  <listener>
+    <description>Initialising Software Status class</description>
+    <listener-class>in.vnl.api.common.SoftVerListener</listener-class>
+  </listener>
+  <listener>
+    <description>Initialising UDP server</description>
+    <listener-class>in.vnl.sockets.UdpServerClient</listener-class>
+  </listener>
+  <listener>
+    <description>Stopping the operation on tomcat shutdown</description>
+    <listener-class>in.vnl.api.common.AutoOprStopListener</listener-class>
+  </listener>
+  <listener>
+    <description>Initializing the DBDataService class</description>
+    <listener-class>in.vnl.api.common.DBDataServiceOnLoadInitializer</listener-class>
+  </listener>
+  <listener>
+    <description>Initializing the Netscan class</description>
+    <listener-class>in.vnl.scheduler.NetscanSchedulerListener</listener-class>
+  </listener>
+  <listener>
+    <description>Initializing the AutoBackupSchedulerListener class</description>
+    <listener-class>in.vnl.scheduler.AutoBackupSchedulerListener</listener-class>
+  </listener>
+  <servlet>
+    <servlet-name>logout</servlet-name>
+    <servlet-class>in.vnl.msgapp.logout</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>logout</servlet-name>
+    <url-pattern>/logout</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>Operations</servlet-name>
+    <servlet-class>in.vnl.msgapp.Operations</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Operations</servlet-name>
+    <url-pattern>/Operations</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>AuthenticateUser</servlet-name>
+    <servlet-class>in.vnl.msgapp.AuthenticateUser</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AuthenticateUser</servlet-name>
+    <url-pattern>/AuthenticateUser</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>userOperations</servlet-name>
+    <servlet-class>in.vnl.msgapp.userOperations</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>userOperations</servlet-name>
+    <url-pattern>/userOperations</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>CDRSERVER</servlet-name>
+    <servlet-class>in.vnl.msgapp.CDRSERVER</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CDRSERVER</servlet-name>
+    <url-pattern>/CDRSERVER</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>jersey-serlvet</servlet-name>
+    <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+    <init-param>
+      <param-name>jersey.config.server.provider.packages</param-name>
+      <param-value>in.vnl.api,com.jersey.jaxb,com.fasterxml.jackson.jaxrs.json</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>jersey-serlvet</servlet-name>
+    <url-pattern>/service/*</url-pattern>
+  </servlet-mapping>
+  <session-config>
+    <session-timeout>600</session-timeout>
+  </session-config>
+</web-app>

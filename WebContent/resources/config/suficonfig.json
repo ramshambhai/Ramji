@@ -1,0 +1,116 @@
+{
+	"CMD_CODE": "SET_SUFI_CONFIG",
+	"BITMASK": "3",
+	"SYS_PARAMS": {
+		"BITMASK": "4",
+		"SUFI_PARAMS": {
+			"LOG_LEVEL": "2",
+			"SUB_HOLD_TIMER": "12000",
+			"SUB_REDIR_TIMER": "60000",
+			"SUFI_OP_MODE": "1",
+			"SUB_TRACK_MODE": {
+				"TRACK_MODE": "1"
+  }
+		},
+		"SUB_INFO": {
+			"SUB_LIST_MODE": "2",
+			"SUB_LIST": [{
+					"SUB_ID": "111111111111111",
+					"SUB_ID_TYPE": "0"
+				}],
+			"HOLD_SUB": {
+				"SUB_ID": "111111111111111",
+				"SUB_ID_TYPE": "1"
+			}
+		},
+		"CELL_INFO": {
+			"SUFI_ID": "41",
+			"PRI_SCRAM_CODE": "299",
+			"LAC_POOL_START": "500",
+			"LAC_POOL_END": "999",
+			"CELL_ID": "10",
+			"TOTAL_TX_POWER": "40",
+			"PCPICH_POWER_PERC": "10",
+			"DL_UARFCN": "10710",
+			"UL_UARFCN": "9760",
+			"PLMN_ID": {
+				"MCC": "404",
+				"MNC": "11"
+			}
+		}
+	},
+	"CELL_PARAMS": {
+		"BITMASK": "7",
+		"DCH": {
+			"DPCCH_POWER_OFF": "-35"
+		},
+		"RRC_SETUP": {
+			"DPCH_FRAME_OFF": "20"
+		},
+		"REDIRECTION_INFO": {
+			"SUFI_OF_REDIR_INFO": {
+				"RDL_UARFCN": "10838",
+				"FREQ_BAND": "255",
+				"BCCH_ARFCN": "65535"
+			},
+			"SUFI_PPF_REDIR_INFO": {
+				"RDL_UARFCN": "10838"
+			},
+			"SUFI_SPF_REDIR_INFO": {
+				"RDL_UARFCN": "10838"
+			},
+			"SUFI_OPER_REDIR_INFO": {
+				"RDL_UARFCN": "10838"
+			}
+		},
+		"SIB_INFO": {
+		"CELLSELECTIONQUALITYMEASURE": "1",
+		"MAXIMUMREPORTEDCELLSONRACH": "1",
+		"NEIGH_CELL_LIST": {
+			"INTRA_FREQ": [{
+				"PSC": "511",
+				"Q_OFFSET_1S": "0",
+				"Q_OFFSET_2S": "0",
+				"Q_QUALMIN": "-24",
+				"Q_RXLEVMIN": "-25",
+				"CELL_ID": "268435456",
+				"LAC": "65535",
+				"INTRA_PLMN_ID": {
+					"MCC": "404",
+					"MNC": "11"
+				}
+			}],
+			"INTER_FREQ": [{
+				"PSC": "511",
+				"DL_UARFCN": "10838",
+				"PCPICH_TX_POWER": "10",
+				"Q_OFFSET_1S": "0",
+				"Q_OFFSET_2S": "0",
+				"Q_QUALMIN": "-24",
+				"Q_RXLEVMIN": "-25",
+				"CELL_ID": "268435456",
+				"LAC": "65535",
+				"INTER_PLMN_ID": {
+					"MCC": "001",
+					"MNC": "001"
+				}
+			}],
+			"INTER_RAT": [{
+				"Q_RXLEVMIN": "-25",
+				"LAC": "65535",
+				"CELL_ID": "268435456",
+				"Q_OFFSET1S_N": "0",
+				"CELLINDIVIDUALOFFSET": "1",
+				"NCC": "1",
+				"BCC": "1",
+				"FREQ_BAND": "0",
+				"BCCH_ARFCN": "1023",
+				"RAT_PLMN_ID": {
+					"MCC": "001",
+					"MNC": "001"
+				}
+			}]
+		}
+	}
+	}
+}

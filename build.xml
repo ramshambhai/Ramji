@@ -1,0 +1,137 @@
+<project name="Locator" default="war-file" basedir=".">
+    <description>
+        Locator build.xml file
+    </description>
+	
+	
+  <property name="src" location="src"/>
+  <property name="build" location="build"/>
+  <property name="war-file"  location="war-file"/>
+  <property environment="env" />
+   <property name="env.P4ROOT" location="${basedir}/.."/>
+   <property name="locatorversion" value="${env.project_version}.${env.project_buildno}"/>
+   <property name="locator" value="1.0.0.1"/>
+   <echo> ================================================================= </echo>
+   <echo> * Environment variable P4ROOT set to ${env.P4ROOT} * </echo>   
+   <echo> * Locator Version set to ${locatorversion} * </echo>
+   <echo> ================================================================= </echo>
+   <property name="_FS" value="${file.separator}" />
+   <property name="_PS" value="${path.separator}" />
+   <property name="_LS" value="${line.separator}" />
+   <property file="${env.P4ROOT}/src/locale.txt" />
+   <property file="${env.P4ROOT}/src/version.txt" />
+   <property file="${env.P4ROOT}/src/common.props" />   
+  
+  
+  <condition property="iswindows">
+   	<os family="windows"></os>
+   </condition>
+   
+   <condition property="islinux">
+   	<os family="unix"></os>
+   </condition> 
+  
+  
+  <target name="init">
+    <!-- Create the time stamp -->
+	
+    <tstamp/>
+    <!-- Create the build directory structure used by compile -->
+    <mkdir dir="${build}"/>
+  </target>
+  
+  
+ <path id="class.path">
+  <fileset dir="WebContent/WEB-INF/lib">
+    <include name="**/*.jar" />
+  </fileset>
+</path>
+  
+  <target name="compile" depends="init"
+        description="compile the source " >
+    <!-- Compile the java code from ${src} into ${build} -->
+    <javac srcdir="${src}" destdir="${build}">
+	<classpath refid="class.path" />
+	 <!--<classpath>
+		<pathelement path="${classpath}"/>
+		<pathelement location="WebContent/WEB-INF/lib/servlet-api.jar"/>
+		<pathelement location="WebContent/WEB-INF/lib/com.springsource.org.dom4j-1.6.1.jar"/>
+		<pathelement location="WebContent/WEB-INF/lib/poi-3.9.jar"/>
+		<pathelement location="WebContent/WEB-INF/lib/poi-ooxml-3.9.jar"/>
+		<pathelement location="WebContent/WEB-INF/lib/poi-ooxml-schemas-3.9.jar"/>
+		<pathelement location="WebContent/WEB-INF/lib/xmlbeans-2.3.0.jar"/>
+	 	<pathelement location="WebContent/WEB-INF/lib/NetComponents.jar"/>
+	    </classpath>-->
+	</javac>
+  </target>
+
+  <target name="war-file" depends="compile"
+        description="generate the distribution" >
+    <!-- Create the distribution directory -->
+    <mkdir dir="${war-file}/"/>
+	<echo file="${env.P4ROOT}/WebContent/resources/version.properties" append="true">${locatorversion}</echo>
+	<war destfile="${war-file}/locator.war" webxml="WebContent/WEB-INF/web.xml">
+   <fileset dir="WebContent">
+      <include name="**/*.*"/>
+   </fileset>
+   
+   <classes dir="build/"/>
+</war>
+	<antcall target="Build-installer" />
+  </target>
+  
+   <target name="clean"
+        description="clean up" >
+    <!-- Delete the ${build} and ${dist} directory trees -->
+    <delete dir="${build}"/>
+    <delete dir="${war-file}"/>
+  </target>
+  
+  
+  
+    <target name="Win" if="iswindows">
+   	
+   	<echo> Platform: Windows </echo>
+   	<!--<exec executable="${env.P4ROOT}/Installer/win_build.bat" failonerror="true" failifexecutionfails="true"> -->
+        
+        <exec executable="${env.P4ROOT}/Installer/Locator_build.bat" failonerror="true" failifexecutionfails="true">
+			<arg value="${locatorversion}">
+        </arg>
+        </exec>   
+   	<echo> executed Windows Build Script </echo>
+   </target>
+  
+  
+  
+  
+  <target name="Lin" if="islinux">
+   	
+   	<echo> Platform: Linux </echo>
+   	<!--<chmod file="${env.P4ROOT}/Installer/lin_build.sh" perm="ugo+rx"/> -->
+        <!--<chmod file="${env.P4ROOT}/Installer/Third_Party_build.sh" perm="ugo+rx"/>-->
+		<chmod file="${env.P4ROOT}/Installer/InstallJammer/installjammer" perm="ugo+rx"/> 
+      <!-- <arg value="${biilingApi}"
+		</arg>-->
+       
+        <exec executable="${env.P4ROOT}/Installer/Locator_build.sh" failonerror="true" failifexecutionfails="true">
+		
+		<arg value="${locatorversion}">
+		</arg>
+		</exec>
+   	<echo> executed Linux Build Script </echo>
+   	
+   </target>
+   
+   <target name="Build-installer">
+		<echo> inside Build-installer</echo>
+		<unzip src="${env.P4ROOT}/Installer/InstallJammer.zip" dest="${env.P4ROOT}/Installer"/>
+		<echo> unzipped InstallJammer </echo>
+		<echo> calling </echo>	
+		<antcall target="Lin"></antcall>   	
+		<antcall target="Win"></antcall>
+   </target>
+  
+  
+  
+  
+</project>

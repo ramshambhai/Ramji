@@ -1,0 +1,88 @@
+{
+  "CMD_CODE": "START_EXHAUSTIVE_SCAN",
+  "SCAN_LIST": [
+    {
+      "TECH": "LTE",
+      "BAND_LIST": [
+        {
+          "BAND": "40"
+        },
+		{
+          "BAND": "40"
+        },
+        {
+          "BAND": "40"
+        },
+        {
+          "BAND": "41"
+        },
+        {
+          "BAND": "41"
+        },
+        {
+          "BAND": "41"
+        },
+        {
+          "BAND": "1"
+        },
+        {
+          "BAND": "1"
+        },
+        {
+          "BAND": "3"
+        },
+        {
+          "BAND": "3"
+        },
+        {
+          "BAND": "5"
+        },
+        
+        {
+          "BAND": "8"
+        },
+        {
+          "BAND": "8"
+        }
+
+      ]
+    },
+	{
+      "TECH": "GSM",
+      "BAND_LIST": [
+        {
+          "BAND": "E_900"
+        },
+        {
+          "BAND": "P_900"
+        },
+        {
+          "BAND": "DCS_1800"
+        },
+        {
+          "BAND": "DCS_1800"
+        }
+      ]
+    },
+    {
+      "TECH": "UMTS",
+      "BAND_LIST": [
+        {
+          "BAND": "1"
+        },
+		{
+          "BAND": "1"
+        },
+        {
+          "BAND": "8"
+        },
+		{
+          "BAND": "8"
+        }
+      ]
+    }
+  ],
+  "RSSI_THRESHOLD": -110,
+  "REPETITION_FLAG": 1,
+  "REPITITION_FREQ": 10
+}

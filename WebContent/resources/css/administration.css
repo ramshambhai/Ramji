@@ -1,0 +1,31 @@
+#operations
+{
+	display:table;
+	margin:0 auto;
+	    background: white;
+    padding: 10px 10px 10px 10px;	
+}
+
+/*table
+{
+	margin-bottom :10px;
+	height: 95px;	
+}*/
+
+.opr
+{
+	margin-bottom :10px;
+	height: 95px;
+	margin-right: 20px;	
+}
+
+.opr tr:first-child td
+{
+	border-bottom: 1px solid black;
+    font-weight: bold;
+}
+
+fieldset
+{
+	    margin-bottom: 20px;
+}

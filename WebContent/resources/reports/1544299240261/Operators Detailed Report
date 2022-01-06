@@ -1,0 +1,18 @@
+Operators Detailed Report
+IP	Count	Packet Type	Frequency	Band	ARFCN	UARFCN	MCC	MNC	Country	Operator	LAC	Cell	NCC	BCC	RSSI	SNR	TA	System Location	Timestamp
+Locator	locator_count	Loc_2g		32	32		404	05	India	Vodafone	32	38	1	1	32			NA,NA	180905-06-16-11
+Locator	locator_count	Loc_2g		32	32		404	05	India	Vodafone	32	38	1	1	32			NA,NA	180905-06-16-11
+Locator	locator_count	Loc_2g		32	32		404	05	India	Vodafone	32	38	1	1	32			NA,NA	180905-06-16-11
+Locator	locator_count	Loc_2g		32	32		404	05	India	Vodafone	32	38	1	1	32			NA,NA	180905-06-16-11
+Locator	locator_count	Loc_2g		32	15		404	05	India	Vodafone	32	34	1	7	32			NA,NA	180905-06-15-03
+Locator	locator_count	Loc_2g		32	15		404	05	India	Vodafone	32	34	1	7	32			NA,NA	180905-06-15-03
+Locator	locator_count	Loc_2g		32	15		404	05	India	Vodafone	32	34	1	7	32			NA,NA	180905-06-15-03
+Locator	locator_count	Loc_2g		32	15		404	05	India	Vodafone	32	34	1	7	32			NA,NA	180905-06-15-03
+Locator	locator_count	Loc_2g		4	4		404	05	India	Vodafone	4	4	0	4	4			NA,NA	180905-06-13-19
+Locator	locator_count	Loc_2g		4	4		404	05	India	Vodafone	4	4	0	4	4			NA,NA	180905-06-13-19
+Locator	locator_count	Loc_2g		4	4		404	05	India	Vodafone	4	4	0	4	4			NA,NA	180905-06-13-19
+Locator	locator_count	Loc_2g		4	4		404	04	India	Idea	4	4	0	4	4			NA,NA	180905-06-13-19
+Locator	locator_count	Loc_2g		2	2		404	05	India	Vodafone	1	1	1	0	-40			NA,NA	180905-06-11-34
+Locator	locator_count	Loc_2g		2	2		404	05	India	Vodafone	1	1	1	0	-40			NA,NA	180905-06-11-34
+Locator	locator_count	Loc_2g		2	2		404	04	India	Idea	1	1	1	0	-40			NA,NA	180905-06-11-34
+Locator	locator_count	Loc_2g		2	2		404	05	India	Vodafone	1	1	1	0	-40			NA,NA	180905-06-11-34

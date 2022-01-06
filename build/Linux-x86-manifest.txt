@@ -1,0 +1,19 @@
+# options: -translation lf -encoding utf-8
+
+F:/SignalJammerFalcon/Installer/common_files/remove_env_vars.sh 901991F4-DB44-4B8C-9285-6A6B0283B083 zlib
+F:/SignalJammerFalcon/Installer/common_files/refresh_env_vars.sh 02E15E3B-5474-40E0-945F-1103FF18EF7E zlib
+F:/SignalJammerFalcon/Installer/common_files/checkspace.sh 467E7840-4E2D-4116-A456-A8A8A23A01ED zlib
+F:/SignalJammerFalcon/Installer/common_files/locatorStatus 92B4B6E4-BBD0-4D60-AD4F-F868CADFAE1E zlib
+F:/SignalJammerFalcon/Installer/common_files/startLocator 1B394B3D-669F-4A13-84BE-424109FD8B88 zlib
+F:/SignalJammerFalcon/Installer/common_files/stopLocator E1E85B6F-EE71-4E29-BA37-77BC3C1A8F92 zlib
+F:/SignalJammerFalcon/war-file/locator.war CFADC75C-940F-4A1E-A0AD-63837436636F zlib
+F:/SignalJammerFalcon/Installer/common_files/pow_compensation.csv 587DF73D-1826-4021-AA9E-1B82A2A6669C zlib
+F:/SignalJammerFalcon/Installer/common_files/power_setting.csv 843AAE8D-B41B-479B-B61B-213E048491E2 zlib
+F:/SignalJammerFalcon/Installer/common_files/tomcat.zip 53D9A76E-9204-401A-8957-46B3FB174A36 zlib
+F:/SignalJammerFalcon/Installer/db/installpostgres 2FCDCF34-6B2A-43F4-984E-79D569103D0C zlib
+F:/SignalJammerFalcon/Installer/db/startpostgres D594F762-1A51-4729-BE19-C407129FF914 zlib
+F:/SignalJammerFalcon/Installer/db/locator.sql 0D07C544-7EE9-43B2-A186-516BC403C16C zlib
+F:/SignalJammerFalcon/Installer/db/postgresql-10.1.zip 92D136CF-E555-4A29-9FAF-34F0022C25E4 zlib
+F:/SignalJammerFalcon/Installer/db/PostgreGui.zip 0D0C35C9-8817-421E-8087-FCE1DEEE579F zlib
+F:/SignalJammerFalcon/Installer/linux/readme.txt 107CA96A-444C-4896-B6E2-5BC2E604FC4D zlib
+F:/SignalJammerFalcon/Installer/linux/jdk.zip 9D7FD099-CB7A-4040-B36A-3A0D1CBCBE9B zlib

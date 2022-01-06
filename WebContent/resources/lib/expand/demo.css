@@ -1,0 +1,63 @@
+
+
+
+
+.col {
+  float: left;
+  margin-right:32px;
+  margin-bottom: 16px;
+}
+
+.col a{
+ color: black;
+ font-size: 13px;
+}
+
+.col a:hover{
+ color: black;
+}
+
+
+
+
+.expand {
+  margin: 0;
+  /*background-image: linear-gradient(bottom, rgb(228,10,85) 14%, rgb(255,36,111) 57%);
+  background-image: -o-linear-gradient(bottom, rgb(228,10,85) 14%, rgb(255,36,111) 57%);
+  background-image: -moz-linear-gradient(bottom, rgb(228,10,85) 14%, rgb(255,36,111) 57%);
+  background-image: -webkit-linear-gradient(bottom, rgb(228,10,85) 14%, rgb(255,36,111) 57%);
+  background-image: -ms-linear-gradient(bottom, rgb(228,10,85) 14%, rgb(255,36,111) 57%);*/
+}
+
+.expand a {
+  background: url("sprite.png") 15px 13px no-repeat;
+  display: block;
+  padding: 10px;
+  padding-left: 32px;
+  margin: 0;
+  text-decoration: none;
+  font-weight: 400;
+  color:black;
+ /* border-bottom: 1px solid rgba(128, 10, 85, 0.5);
+  text-shadow: 1px 1px 1px rgb(128,10,85);*/
+}
+
+.expand a :hover{
+ color: black;
+}
+
+.expand.open a { background-position: 13px -25px; }
+
+.expand + div { padding: 10px; }
+
+.close{
+ opacity: 1;
+}
+
+
+
+
+
+
+
+

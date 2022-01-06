@@ -1,0 +1,130 @@
+{
+  "CMD_CODE": "SET_SUFI_CONFIG",
+  "BITMASK": "3",
+  "SYS_PARAMS": {
+    "BITMASK": "4",
+    "SUFI_PARAMS": {
+      "LOG_LEVEL": "4",
+      "SUB_HOLD_TIMER": "12000",
+      "SUB_REDIR_TIMER": "60000",
+      "SUFI_OP_MODE": "1",
+      "SUB_TRACK_MODE": {
+        "TRACK_MODE": "1"
+      },
+      "SUFI_OFFLINE_MODE_CONFIG": {
+        "SUFI_OFFLINE_MODE": "1",
+        "SUFI_OFFLINE_FILE_CONF": {
+          "FILE_SIZE": "10",
+          "NUM_OF_FILES": "5"
+        }
+      },
+      "SUFI_REDIR_RAT_PREFER": "0"
+    },
+    "SUB_INFO": {
+      "SUB_LIST_MODE": "0",
+      "SUB_LIST": [
+        {
+          "SUB_ID": "111111111111111",
+          "SUB_ID_TYPE": "0"
+        }],
+      "HOLD_SUB": [
+        {
+          "SUB_ID": "111111111111111",
+          "SUB_ID_TYPE": "0"
+        }]
+    },
+    "CELL_INFO": {
+      "SUFI_ID": "41",
+      "PHY_CELL_ID": "299",
+      "TAC_POOL_START": "500",
+      "TAC_POOL_END": "999",
+      "CELL_ID": "10",
+      "Reference Signal Power": "40",
+      "p-b": "10710",
+      "DL_EARFCN": "9760",
+      "DL_Channel_BandWidth": "11",
+      "PLMN_ID": {
+        "MCC": "404",
+        "MNC": "11"
+      }
+    }
+  },
+  "CELL_PARAMS": {
+    "BITMASK": "7",
+    "REDIRECTION_INFO": {
+      "SUFI_OF_REDIR_INFO": {
+        "RDL_EARFCN": "10838",
+        "RDL_UARFCN": "10838",
+        "FREQ_BAND": "255",
+        "BCCH_ARFCN": "65535"
+      },
+      "SUFI_PPF_REDIR_INFO": {
+        "RDL_EARFCN": "10838"
+      },
+      "SUFI_SPF_REDIR_INFO": {
+        "RDL_EARFCN": "10838"
+      },
+      "SUFI_OPER_REDIR_INFO": {
+        "RDL_EARFCN": "10838"
+      }
+    },
+    "SIB_INFO": {
+      "NEIGH_CELL_LIST": {
+        "INTRA_FREQ": [
+          {
+            "PCI": "0",
+            "CELL_ID": "0",
+            "TAC": "0",
+            "INTRA_PLMN_ID": {
+              "MCC": "0",
+              "MNC": "0"
+            }
+          }
+        ],
+        "INTER_FREQ": [
+          {
+            "PCI": "0 ",
+            "DL_Carrier_Frequency": "0",
+            "Priority": "0",
+            "CELL_ID": "0",
+            "TAC": "0",
+            "INTER_PLMN_ID": {
+              "MCC": "0",
+              "MNC": "0"
+            }
+          }
+        ],
+        "INTER_RAT_2G": [
+          {
+            "Starting_ARFCN": "10838",
+            "NCC Permitted": "10",
+            "Band_Indicator": "0",
+            "Explicit_List_ARFCN": {
+              "ARFCN1": "0",
+              "ARFCN2": "0"
+            },
+            "CELL_ID": "0",
+            "RAC": "0",
+            "INTER_RAT_PLMN_ID": {
+              "MCC": "0",
+              "MNC": "0"
+            }
+          }
+        ],
+        "INTER_RAT_3G": [
+          {
+            "PSC": "0",
+            "DL_Carrier_Frequency": "0",
+            "Priority": "0",
+            "CELL_ID": "0",
+            "LAC": "0",
+            "INTER_PLMN_ID": {
+              "MCC": "0",
+              "MNC": "0"
+            }
+          }
+        ]
+      }
+    }
+  }
+}

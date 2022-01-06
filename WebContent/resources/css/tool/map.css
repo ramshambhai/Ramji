@@ -1,0 +1,28 @@
+#map_leaf{
+	float:left;
+	width:60% !important;
+	height: calc(100% - 50px);
+}
+
+#data-panel{
+	float:left;
+	width:calc(40% - 5px);
+	height: calc(100% - 50px);
+}
+
+/*#live_his_tab{
+	height: 100%
+	
+}*/
+
+#live_opr
+{
+	height: calc(100% - 42px);
+}
+
+#his_opr{
+	height: calc(100% - 82px);
+}
+
+#opr_filter td{padding-left:2px;padding-right:2px;}
+#opr_filter_div{margin:10px 0px 10px 0px;}

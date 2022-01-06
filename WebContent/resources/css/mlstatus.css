@@ -1,0 +1,25 @@
+.tab_status {
+    border-collapse: collapse;
+    width: 60%;
+    margin: 100px auto 10px 100px;
+    text-align: center;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+	font-size:10px;
+    }	
+
+.tab_status thead {
+    background-color: #3a5795;
+    color: white;
+}
+
+.tab_status tbody {
+	background-color:white;
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+
+.tab_status  th, td {
+    text-align: left;
+    padding: 8px;
+}

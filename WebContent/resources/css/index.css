@@ -1,0 +1,35 @@
+#message_box,#operationAndDevicesDiv
+{
+	display:table;
+	margin:0 auto;
+	background: white;
+    padding: 10px 10px 10px 10px;
+    width:98%;
+    height:auto;	
+}
+
+table
+{
+	margin-bottom :10px;	
+}
+table select
+{
+	width: 100%;
+    overflow: auto;	
+}
+  #pageloadBox
+  {
+display : none ;
+position : fixed;
+z-index: 100;
+background-image : url('http://magnit5.ru/img/load.gif');
+background-color:#fff;
+opacity : 0.8;
+background-repeat : no-repeat;
+background-position : center;
+left : 0;
+bottom : 0;
+right : 0;
+top : 60px;
+  }  
+    
